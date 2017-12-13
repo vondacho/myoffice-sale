@@ -1,0 +1,5 @@
+rootProject.name = 'myoffice-sale'
+include 'myoffice-sale-domain'
+include 'myoffice-sale-data'
+include 'myoffice-sale-rest'
+
