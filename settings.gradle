@@ -1,5 +1,8 @@
 rootProject.name = 'myoffice-sale'
 include 'myoffice-sale-domain'
 include 'myoffice-sale-data'
-include 'myoffice-sale-rest'
+include 'myoffice-sale-query'
+include 'myoffice-sale-command'
+include 'myoffice-sale-ui'
+include 'myoffice-sale-batch'
 

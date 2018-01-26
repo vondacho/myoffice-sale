@@ -1,49 +1,27 @@
 package edu.noia.myoffice.sale.domain.aggregate;
 
-import edu.noia.myoffice.common.domain.entity.EntityMutableState;
-import edu.noia.myoffice.common.domain.exception.ResourceNotFoundException;
 import edu.noia.myoffice.sale.domain.vo.CartItem;
+import edu.noia.myoffice.sale.domain.vo.CartItemId;
 import edu.noia.myoffice.sale.domain.vo.InvoiceId;
+import edu.noia.myoffice.sale.domain.vo.OrderId;
 
 import java.util.Collection;
+import java.util.Optional;
 
-public interface CartMutableState<T extends CartItem>
-        extends CartState<T>, EntityMutableState<CartMutableState, CartState> {
+public interface CartMutableState extends CartState {
 
-    CartMutableState setTitle(String value);
-    CartMutableState setNotes(String value);
+    CartMutableState add(CartItem item);
 
-    default CartMutableState modify(CartState modifier) {
-        return setTitle(modifier.getTitle())
-                .setNotes(modifier.getNotes());
-    }
-    default CartMutableState patch(CartState modifier) {
-        return setTitle(modifier.getTitle() != null ? modifier.getTitle() : getTitle())
-                .setNotes(modifier.getNotes() != null ? modifier.getNotes() : getNotes());
-    }
-
-    default CartMutableState add(T item) {
-        getItems().add(item);
+    default CartMutableState addAll(Collection<CartItem> items) {
+        items.forEach(this::add);
         return this;
     }
 
-    default CartMutableState add(Collection<T> items) {
-        getItems().addAll(items);
-        return this;
-    }
+    Optional<CartItem> remove(CartItemId itemId);
 
-    default CartMutableState remove(T item) {
-        if (!getItems().remove(item)) {
-            throw new ResourceNotFoundException(
-                String.format("No %s identified by %s has been found", CartItem.class, item.getId()));
-        }
-        return this;
-    }
+    CartMutableState setOrderId(OrderId orderId);
+    CartMutableState setInvoiceId(InvoiceId invoiceId);
 
-    default CartMutableState clear() {
-        getItems().clear();
-        return this;
-    }
-
-    CartMutableState invoice(InvoiceId invoiceId);
+    OrderId getOrderId();
+    InvoiceId getInvoiceId();
 }

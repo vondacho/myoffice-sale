@@ -2,37 +2,54 @@ package edu.noia.myoffice.sale.domain.vo;
 
 import edu.noia.myoffice.sale.domain.aggregate.CartState;
 import lombok.*;
+import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
-@EqualsAndHashCode(exclude = "items", callSuper = false, doNotUseGetters = true)
+@ToString(exclude = {"notes","items"})
+@EqualsAndHashCode(callSuper = false)
 @Getter
-@Builder(builderMethodName = "hiddenBuilder", toBuilder = true)
+@Accessors(chain = true)
+@RequiredArgsConstructor(staticName = "of")
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CartSample<T extends CartItem> implements CartState<T> {
+public class CartSample implements CartState {
+
     @NonNull
     FolderId folderId;
     @NonNull
     CartType type;
+    @Setter(value = AccessLevel.PRIVATE)
     String title;
+    @Setter(value = AccessLevel.PRIVATE)
     String notes;
-    @Singular
-    List<T> items;
+    @Setter(value = AccessLevel.PRIVATE)
+    List<CartItem> items;
 
     public static CartSample of(CartState state) {
-        return CartSample.builder(state.getFolderId(), state.getType())
-                .title(state.getTitle())
-                .notes(state.getNotes())
-                .items(state.getItems())
-                .build();
+        return CartSample.of(state.getFolderId(), state.getType())
+                .setTitle(state.getTitle())
+                .setNotes(state.getNotes())
+                .setItems(state.getItems());
     }
 
-    public static CartSampleBuilder builder(@NonNull FolderId folderId, @NonNull CartType type) {
-        return hiddenBuilder()
-                .folderId(folderId)
-                .type(type);
+    @Override
+    public List<CartItem> getItems() {
+        return Optional.ofNullable(items)
+                .map(i -> Collections.unmodifiableList(new ArrayList<>(i)))
+                .orElse(new ArrayList<>());
     }
 
+    @Override
+    public Optional<CartItem> getItem(CartItemId itemId) {
+        return Optional.ofNullable(items)
+                .flatMap(i -> i
+                        .stream()
+                        .filter(item -> item.getId().equals(itemId))
+                        .findFirst());
+    }
 }

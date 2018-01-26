@@ -1,13 +1,15 @@
 package edu.noia.myoffice.sale.domain.vo;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.util.UUID;
 
+@ToString
 @Getter
 @RequiredArgsConstructor(staticName = "of")
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class FolderId {
     @NonNull
     UUID id;

@@ -1,0 +1,7 @@
+dependencies {
+    compile("edu.noia.myoffice:myoffice-sale-domain:${version}")
+    compile("edu.noia.myoffice:myoffice-sale-data:${version}")
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: '${springBootVersion}'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest', version: '${springBootVersion}'
+    compile group: 'org.axonframework', name: 'axon-spring-boot-starter', version: '3.1.2'
+}

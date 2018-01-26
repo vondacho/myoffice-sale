@@ -1,13 +1,8 @@
 dependencies {
     compile("edu.noia.myoffice:myoffice-sale-domain:${version}")
     compile("edu.noia.myoffice:myoffice-common-data:${myofficeCommonVersion}")
-    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compile 'org.springframework.boot:spring-boot-starter'
-    compile 'org.springframework.boot:spring-boot-starter-data-rest'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.0.0.M7'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest', version: '2.0.0.M7'
     compile 'org.hibernate:hibernate-java8:5.1.0.Final'
     compile 'com.h2database:h2:1.4.196'
-}
-
-bootRepackage {
-    enabled = false
 }

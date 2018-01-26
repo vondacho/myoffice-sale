@@ -1,80 +1,91 @@
 package edu.noia.myoffice.sale.domain.aggregate;
 
-import edu.noia.myoffice.common.domain.entity.BaseEntity;
+import edu.noia.myoffice.common.domain.event.EventPublisher;
 import edu.noia.myoffice.common.util.BeanValidator;
-import edu.noia.myoffice.sale.domain.repository.CartRepository;
-import edu.noia.myoffice.sale.domain.vo.CartId;
-import edu.noia.myoffice.sale.domain.vo.CartItem;
-import edu.noia.myoffice.sale.domain.vo.CartSample;
-import edu.noia.myoffice.sale.domain.vo.InvoiceId;
-import lombok.NonNull;
+import edu.noia.myoffice.sale.domain.event.cart.CartInvoicedEvent;
+import edu.noia.myoffice.sale.domain.event.cart.CartOrderedEvent;
+import edu.noia.myoffice.sale.domain.event.item.ItemAddedToCartEvent;
+import edu.noia.myoffice.sale.domain.event.item.ItemRemovedFromCartEvent;
+import edu.noia.myoffice.sale.domain.repository.command.CartRepository;
+import edu.noia.myoffice.sale.domain.util.Holder;
+import edu.noia.myoffice.sale.domain.vo.*;
+import lombok.*;
+import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.List;
+@Slf4j
+@Accessors(chain = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
+@FieldDefaults(level = AccessLevel.PROTECTED)
+public class Cart {
 
-import static java.util.Collections.unmodifiableList;
-import static java.util.stream.Collectors.toList;
+    @Getter
+    @Setter(value = AccessLevel.PRIVATE)
+    CartId id;
+    @NonNull
+    CartMutableState state;
 
-public class Cart extends BaseEntity<
-        Cart,
-        CartId,
-        CartState,
-        CartMutableState,
-        CartRepository> {
-
-    public static Cart ofValid(@NonNull CartState state) {
-        return ofValid(CartId.random(), state);
+    public static Cart of(CartState cartState) {
+        return new Cart(CartMutableSample.of(validate(cartState))).identify();
     }
 
-    public static Cart ofValid(@NonNull CartId id, @NonNull CartState state) {
-        return new Cart().setState(state).setId(id);
+    protected static <T> T validate(T state) {
+        return BeanValidator.validate(state);
     }
 
-    public List<CartItem> getItems() { return unmodifiableList(state.getItems()); }
-
-    public Cart add(CartItem item) {
-        return setState(toMutable().add(item));
+    public CartType getType() {
+        return state.getType();
     }
 
-    public Cart remove(CartItem item) {
-        return setState(toMutable().remove(item).add(item));
-    }
-
-    public Cart invoice(InvoiceId invoiceId) {
-        List<CartItem> items = new ArrayList(state.getItems());
-        return setState(toMutable()
-                .clear()
-                .invoice(invoiceId)
-                .add(items.stream()
-                        .map(item -> item.invoice(invoiceId))
-                        .collect(toList())));
-    }
-
-    public InvoiceId getInvoice() {
-        return state.getInvoiceId();
-    }
-
-    @Override
-    protected CartMutableState toMutableState(CartState state) {
-        return null;
-    }
-
-    @Override
-    protected CartState toImmutableState(CartState state) {
+    public CartState getState() {
         return CartSample.of(state);
     }
 
-    @Override
-    protected CartId identify()  {
-        return CartId.random();
+    protected Cart identify() {
+        return setId(CartId.random());
     }
 
-    @Override
-    protected CartState validate(CartState state) {
-        return validateState(state);
+    public void addItem(CartItem cartItem, EventPublisher eventPublisher) {
+        if (state.getOrderId() != null) {
+            throw new RuntimeException(String.format("Cart {} has been ordered, no more add possible", getId()));
+        }
+        state.add(validate(cartItem));
+        eventPublisher.accept(ItemAddedToCartEvent.of(getId(), cartItem));
     }
 
-    private static <T> T validateState(T state) {
-        return BeanValidator.validate(state);
+    public CartItem removeItem(CartItemId itemId, EventPublisher eventPublisher) {
+        if (state.getOrderId() != null) {
+            throw new RuntimeException(String.format("Cart {} has been ordered, no more add possible", getId()));
+        }
+        return state.remove(itemId).map(cartItem -> {
+            eventPublisher.accept(ItemRemovedFromCartEvent.of(getId(), itemId));
+            return cartItem;
+        })
+        .orElseThrow(() -> new RuntimeException(String.format("Item {} of cart {} not found", itemId, getId())));
+    }
+
+    public void order(EventPublisher eventPublisher) {
+        if (state.getOrderId() != null) {
+            throw new RuntimeException(String.format("Cart {} is already ordered", getId()));
+        }
+        state.setOrderId(OrderId.random());
+        eventPublisher.accept(CartOrderedEvent.of(getId(), state.getType(), state.getOrderId()));
+    }
+
+    public void close(InvoiceId invoiceId, EventPublisher eventPublisher) {
+        if (state.getOrderId() != null) {
+            if (state.getInvoiceId() != null) {
+                throw new RuntimeException(String.format("Cart {} is already closed", getId()));
+            }
+            state.setInvoiceId(invoiceId);
+            eventPublisher.accept(CartInvoicedEvent.of(getId(), state.getInvoiceId()));
+        }
+        else throw new RuntimeException(String.format("Cart {} has not been ordered, hence not closeable", getId()));
+    }
+
+    public Holder<Cart> save(CartRepository repository) {
+        return repository.save(id, state);
     }
 }
