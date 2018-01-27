@@ -10,11 +10,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-@ToString(exclude = {"notes","items"})
-@EqualsAndHashCode(callSuper = false)
-@Getter
+@ToString(exclude = {"items"})
 @Accessors(chain = true)
-@RequiredArgsConstructor(staticName = "of")
+@Getter
+@Setter(value = AccessLevel.PRIVATE)
+@RequiredArgsConstructor(staticName = "of", access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CartSample implements CartState {
@@ -23,11 +23,8 @@ public class CartSample implements CartState {
     FolderId folderId;
     @NonNull
     CartType type;
-    @Setter(value = AccessLevel.PRIVATE)
     String title;
-    @Setter(value = AccessLevel.PRIVATE)
     String notes;
-    @Setter(value = AccessLevel.PRIVATE)
     List<CartItem> items;
 
     public static CartSample of(CartState state) {

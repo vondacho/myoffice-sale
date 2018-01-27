@@ -1,8 +1,8 @@
 package edu.noia.myoffice.sale.command.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.noia.myoffice.sale.command.axon.aggregate.AxonESCart;
-import edu.noia.myoffice.sale.command.axon.repository.AxonESRepository;
+import edu.noia.myoffice.sale.command.axon.aggregate.AxonCart;
+import edu.noia.myoffice.sale.command.axon.repository.AxonCartRepository;
 import edu.noia.myoffice.sale.domain.repository.command.CartRepository;
 import org.axonframework.serialization.Serializer;
 import org.axonframework.serialization.json.JacksonSerializer;
@@ -19,7 +19,7 @@ public class AxonConfig {
 
     @Bean
     public CartRepository cartRepository() {
-        return new AxonESRepository(axonConfiguration.repository(AxonESCart.class));
+        return new AxonCartRepository(axonConfiguration.repository(AxonCart.class));
     }
 
     @Bean

@@ -1,6 +1,6 @@
 package edu.noia.myoffice.sale.data.jpa;
 
-import edu.noia.myoffice.common.data.jpa.JpaAuditableEntity;
+import edu.noia.myoffice.common.data.jpa.JpaBaseEntity;
 import edu.noia.myoffice.sale.domain.aggregate.CartMutableState;
 import edu.noia.myoffice.sale.domain.aggregate.CartState;
 import edu.noia.myoffice.sale.domain.vo.*;
@@ -19,10 +19,10 @@ import java.util.Optional;
 @EqualsAndHashCode(of = "id", callSuper = false)
 @Accessors(chain=true)
 @Getter
-@Setter
+@Setter(value = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class JpaCartState extends JpaAuditableEntity implements CartMutableState {
+public class JpaCartState extends JpaBaseEntity implements CartMutableState {
 
     CartId id;
     FolderId folderId;

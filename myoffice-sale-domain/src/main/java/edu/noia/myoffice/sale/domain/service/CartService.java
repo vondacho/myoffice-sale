@@ -8,10 +8,8 @@ import edu.noia.myoffice.sale.domain.command.cart.OrderCartCommand;
 import edu.noia.myoffice.sale.domain.command.item.AddItemToCartCommand;
 import edu.noia.myoffice.sale.domain.command.item.DeposeItemIntoCartCommand;
 import edu.noia.myoffice.sale.domain.command.item.RemoveItemFromCartCommand;
-import edu.noia.myoffice.sale.domain.event.cart.CartCreatedEvent;
 import edu.noia.myoffice.sale.domain.event.item.ItemCreatedEvent;
 import edu.noia.myoffice.sale.domain.repository.command.CartRepository;
-import edu.noia.myoffice.sale.domain.vo.CartSample;
 import edu.noia.myoffice.sale.domain.vo.CartType;
 import lombok.AccessLevel;
 import lombok.NonNull;
@@ -31,8 +29,7 @@ public class CartService {
 
     public void create(CreateCartCommand command) {
         LOG.debug("{} received command: {}", getClass(), command);
-        Cart.of(command.getState()).save(cartRepository).execute(cart ->
-            eventPublisher.accept(CartCreatedEvent.of(cart.getId(), CartSample.of(cart.getState()))));
+        Cart.of(command.getState(), eventPublisher).save(cartRepository);
     }
 
     public void addItem(AddItemToCartCommand command) {

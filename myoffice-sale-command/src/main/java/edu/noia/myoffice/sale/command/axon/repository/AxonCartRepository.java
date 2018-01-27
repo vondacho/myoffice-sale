@@ -1,10 +1,10 @@
 package edu.noia.myoffice.sale.command.axon.repository;
 
-import edu.noia.myoffice.sale.command.axon.aggregate.AxonESCart;
+import edu.noia.myoffice.common.util.Holder;
+import edu.noia.myoffice.sale.command.axon.aggregate.AxonCart;
 import edu.noia.myoffice.sale.domain.aggregate.Cart;
 import edu.noia.myoffice.sale.domain.aggregate.CartState;
 import edu.noia.myoffice.sale.domain.repository.command.CartRepository;
-import edu.noia.myoffice.sale.domain.util.Holder;
 import edu.noia.myoffice.sale.domain.vo.CartId;
 import lombok.AccessLevel;
 import lombok.NonNull;
@@ -19,10 +19,10 @@ import java.util.function.Consumer;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AxonESRepository implements CartRepository {
+public class AxonCartRepository implements CartRepository {
 
     @NonNull
-    Repository<AxonESCart> repository;
+    Repository<AxonCart> repository;
 
     @Override
     public Optional<Holder<Cart>> findOne(CartId cartId) {
@@ -36,21 +36,21 @@ public class AxonESRepository implements CartRepository {
     @Override
     public Holder<Cart> save(CartId id, CartState state) {
         try {
-            return new CartHolder(repository.newInstance(() -> AxonESCart.of(state)));
+            return new CartHolder(repository.newInstance(() -> AxonCart.of(state)));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public <T extends Cart> Holder<T> save(Cart cart) {
-        return null;
+    public Holder<Cart> save(Cart cart) {
+        return action -> action.accept(cart);
     }
 
     @RequiredArgsConstructor
     private class CartHolder implements Holder<Cart> {
         @NonNull
-        Aggregate<AxonESCart> aggregate;
+        Aggregate<AxonCart> aggregate;
 
         @Override
         public void execute(Consumer<Cart> action) {

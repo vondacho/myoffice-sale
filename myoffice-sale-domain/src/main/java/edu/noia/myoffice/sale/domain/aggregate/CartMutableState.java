@@ -19,9 +19,11 @@ public interface CartMutableState extends CartState {
 
     Optional<CartItem> remove(CartItemId itemId);
 
-    CartMutableState setOrderId(OrderId orderId);
-    CartMutableState setInvoiceId(InvoiceId invoiceId);
-
     OrderId getOrderId();
+
+    CartMutableState setOrderId(OrderId orderId);
+
     InvoiceId getInvoiceId();
+
+    CartMutableState setInvoiceId(InvoiceId invoiceId);
 }

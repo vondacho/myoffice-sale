@@ -5,24 +5,29 @@ import edu.noia.myoffice.sale.domain.vo.CartItem;
 import edu.noia.myoffice.sale.domain.vo.CartItemId;
 import edu.noia.myoffice.sale.domain.vo.CartType;
 import edu.noia.myoffice.sale.domain.vo.FolderId;
-import lombok.NonNull;
 
+import javax.validation.constraints.NotNull;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 public interface CartState extends EntityState {
 
-    @NonNull
+    @NotNull
     FolderId getFolderId();
 
-    @NonNull
+    @NotNull
     CartType getType();
 
     String getTitle();
 
     String getNotes();
 
-    List<CartItem> getItems();
+    default List<CartItem> getItems() {
+        return Collections.emptyList();
+    }
 
-    Optional<CartItem> getItem(CartItemId itemId);
+    default Optional<CartItem> getItem(CartItemId itemId) {
+        return Optional.empty();
+    }
 }

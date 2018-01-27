@@ -8,31 +8,33 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.*;
 
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @Getter
-@Setter
-@NoArgsConstructor
+@RequiredArgsConstructor(staticName = "of", access = AccessLevel.PRIVATE)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CartMutableSample implements CartMutableState {
 
+    @NonNull
     FolderId folderId;
+    @NonNull
     CartType type;
+    @Setter
     String title;
+    @Setter
     String notes;
+    @Setter
+    OrderId orderId;
+    @Setter
+    InvoiceId invoiceId;
     @Setter(value = AccessLevel.PRIVATE)
     Map<CartItemId, CartItem> items;
-    OrderId orderId;
-    InvoiceId invoiceId;
 
-    public static CartMutableState of(CartState cartState) {
-        return new CartMutableSample()
-                .setFolderId(cartState.getFolderId())
-                .setType(cartState.getType())
-                .setTitle(cartState.getTitle())
-                .setNotes(cartState.getNotes())
+    public static CartMutableState of(CartState state) {
+        return CartMutableSample.of(state.getFolderId(), state.getType())
+                .setTitle(state.getTitle())
+                .setNotes(state.getNotes())
                 .setItems(new HashMap<>())
-                .addAll(cartState.getItems());
+                .addAll(state.getItems());
     }
 
     @Override
