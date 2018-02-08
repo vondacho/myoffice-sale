@@ -6,8 +6,8 @@ import lombok.experimental.FieldDefaults;
 import java.util.UUID;
 
 @ToString
-@Getter
 @EqualsAndHashCode(of="id", callSuper = false, doNotUseGetters = true)
+@Getter
 @RequiredArgsConstructor(staticName = "of")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @FieldDefaults(level = AccessLevel.PRIVATE)

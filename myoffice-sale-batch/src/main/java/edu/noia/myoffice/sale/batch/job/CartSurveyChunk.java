@@ -1,9 +1,9 @@
 package edu.noia.myoffice.sale.batch.job;
 
 import edu.noia.myoffice.common.domain.event.EventPublisher;
-import edu.noia.myoffice.sale.data.adapter.CartRepositoryAdapter;
 import edu.noia.myoffice.sale.domain.aggregate.CartState;
 import edu.noia.myoffice.sale.domain.event.cart.CartDeclaredAsRequestableEvent;
+import edu.noia.myoffice.sale.query.data.adapter.CartStateRepositoryAdapter;
 import lombok.NonNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,15 +17,15 @@ import java.util.Optional;
 public class CartSurveyChunk {
 
     @NonNull
-    CartRepositoryAdapter cartRepository;
+    CartStateRepositoryAdapter cartRepository;
     @NonNull
     EventPublisher eventPublisher;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Optional<Pageable> execute(Pageable pageable) {
-        Page<CartState> page = cartRepository.findAll(pageable);
-        page.getContent().forEach(this::checkRequestableCart);
-        return page.isLast() ? Optional.empty() : Optional.of(pageable.next());
+/*        Page<CartState> page = cartRepository.findAll();
+        page.getContent().forEach(this::checkRequestableCart);*/
+        return Optional.empty(); // page.isLast() ? Optional.empty() : Optional.of(pageable.next());
     }
 
     private void checkRequestableCart(CartState state) {

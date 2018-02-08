@@ -17,7 +17,7 @@ public class ChunkPageable implements Pageable {
 
     int pageNumber = 0;
     int pageSize = 10;
-    int offset = 0;
+    long offset = 0;
 
     @Accessors(fluent = true)
     Pageable previousOrFirst;

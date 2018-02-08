@@ -1,12 +1,12 @@
 package edu.noia.myoffice.sale.query.handler;
 
-import edu.noia.myoffice.sale.data.adapter.CartRepositoryAdapter;
-import edu.noia.myoffice.sale.data.jpa.JpaCartState;
+import edu.noia.myoffice.sale.domain.aggregate.CartMutableState;
 import edu.noia.myoffice.sale.domain.event.cart.CartCreatedEvent;
 import edu.noia.myoffice.sale.domain.event.cart.CartInvoicedEvent;
 import edu.noia.myoffice.sale.domain.event.cart.CartOrderedEvent;
 import edu.noia.myoffice.sale.domain.event.item.ItemAddedToCartEvent;
 import edu.noia.myoffice.sale.domain.event.item.ItemRemovedFromCartEvent;
+import edu.noia.myoffice.sale.query.repository.CartStateRepository;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -19,38 +19,38 @@ import lombok.extern.slf4j.Slf4j;
 public class CartUpdater {
 
     @NonNull
-    CartRepositoryAdapter repository;
+    CartStateRepository repository;
 
     public void on(CartCreatedEvent event) {
         LOG.debug("{} received event: {}", getClass().getName(), event);
-        repository.save(event.getCartState());
+        repository.save(event.getCartId(), event.getCartState());
     }
 
     public void on(ItemAddedToCartEvent event) {
         LOG.debug("{} received event: {}", getClass().getName(), event);
         repository
-                .findOne(event.getCartId())
-                .ifPresent(cart -> ((JpaCartState)cart).add(event.getCartItem()));
+                .findById(event.getCartId())
+                .ifPresent(cart -> ((CartMutableState)cart).add(event.getCartItem()));
     }
 
     public void on(ItemRemovedFromCartEvent event) {
         LOG.debug("{} received event: {}", getClass().getName(), event);
         repository
-                .findOne(event.getCartId())
-                .ifPresent(cart -> ((JpaCartState)cart).remove(event.getCartItemId()));
+                .findById(event.getCartId())
+                .ifPresent(cart -> ((CartMutableState)cart).remove(event.getCartItemId()));
     }
 
     public void on(CartOrderedEvent event) {
         LOG.debug("{} received event: {}", getClass().getName(), event);
         repository
-                .findOne(event.getCartId())
-                .ifPresent(cart -> ((JpaCartState)cart).setOrderId(event.getOrderId()));
+                .findById(event.getCartId())
+                .ifPresent(cart -> ((CartMutableState)cart).setOrderId(event.getOrderId()));
     }
 
     public void on(CartInvoicedEvent event) {
         LOG.debug("{} received event: {}", getClass().getName(), event);
         repository
-                .findOne(event.getCartId())
-                .ifPresent(cart -> ((JpaCartState)cart).setInvoiceId(event.getInvoiceId()));
+                .findById(event.getCartId())
+                .ifPresent(cart -> ((CartMutableState)cart).setInvoiceId(event.getInvoiceId()));
     }
 }

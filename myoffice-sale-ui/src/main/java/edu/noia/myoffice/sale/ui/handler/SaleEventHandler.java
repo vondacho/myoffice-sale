@@ -13,10 +13,10 @@ import java.util.function.Consumer;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SaleEventHandler {
 
-    SaleEventConsumer bridge;
+    SaleEventFluxSinkAdapter sinkAdapter;
 
     @Getter
-    Flux<Event> eventStream = Flux.create(sink -> bridge = new SaleEventConsumer() {
+    Flux<Event> eventStream = Flux.create(sink -> sinkAdapter = new SaleEventFluxSinkAdapter() {
         @Override
         public void accept(Event event) {
             sink.next(event);
@@ -28,20 +28,20 @@ public class SaleEventHandler {
         }
     });
 
-    private interface SaleEventConsumer extends Consumer<Event> {
+    private interface SaleEventFluxSinkAdapter extends Consumer<Event> {
         void complete();
     }
 
     public void on(Event event) {
         LOG.debug("{} received event: {}", getClass().getName(), event);
-        if (bridge != null) {
-            bridge.accept(event);
+        if (sinkAdapter != null) {
+            sinkAdapter.accept(event);
         }
     }
 
     public void terminate() {
         LOG.debug("{} is being terminated", getClass().getName());
-        bridge.complete();
+        sinkAdapter.complete();
         LOG.debug("{} has been terminated", getClass().getName());
     }
 

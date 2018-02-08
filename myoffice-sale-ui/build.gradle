@@ -1,6 +1,13 @@
 dependencies {
+    compile("edu.noia.myoffice:myoffice-sale-common:${version}")
+    compile("edu.noia.myoffice:myoffice-sale-domain:${version}")
     compile("edu.noia.myoffice:myoffice-sale-command:${version}")
+    compile("edu.noia.myoffice:myoffice-sale-command-data:${version}")
     compile("edu.noia.myoffice:myoffice-sale-query:${version}")
+    compile("edu.noia.myoffice:myoffice-sale-query-data:${version}")
+    compile("edu.noia.myoffice:myoffice-sale-messaging:${version}")
+    compile("edu.noia.myoffice:myoffice-sale-rest:${version}")
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '2.0.0.M7'
-    compile group: 'org.axonframework', name: 'axon-spring-boot-starter', version: '3.1.2'
+    compile group: 'org.springframework.data', name: 'spring-data-rest-hal-browser', version: '3.0.3.RELEASE'
+    compile 'com.h2database:h2:1.4.196'
 }

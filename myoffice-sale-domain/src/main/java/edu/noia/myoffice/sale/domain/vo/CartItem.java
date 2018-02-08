@@ -6,8 +6,8 @@ import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 
-@EqualsAndHashCode(of = "id", callSuper = false, doNotUseGetters = true)
 @Getter
+@EqualsAndHashCode(of = "id", callSuper = false, doNotUseGetters = true)
 @RequiredArgsConstructor(staticName = "of")
 @AllArgsConstructor(staticName = "of")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

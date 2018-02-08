@@ -1,5 +1,6 @@
 package edu.noia.myoffice.sale.domain.vo;
 
+import edu.noia.myoffice.common.domain.entity.EntityState;
 import edu.noia.myoffice.sale.domain.aggregate.CartMutableState;
 import edu.noia.myoffice.sale.domain.aggregate.CartState;
 import lombok.*;
@@ -62,5 +63,15 @@ public class CartMutableSample implements CartMutableState {
     @Override
     public Optional<CartItem> remove(CartItemId itemId) {
         return items != null ? Optional.ofNullable(items.remove(itemId)) : Optional.empty();
+    }
+
+    @Override
+    public CartMutableState modify(EntityState modifier) {
+        return this;
+    }
+
+    @Override
+    public CartMutableState patch(EntityState modifier) {
+        return this;
     }
 }
