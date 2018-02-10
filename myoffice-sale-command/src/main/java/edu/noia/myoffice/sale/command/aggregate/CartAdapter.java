@@ -2,6 +2,7 @@ package edu.noia.myoffice.sale.command.aggregate;
 
 import edu.noia.myoffice.common.domain.event.EventPublisher;
 import edu.noia.myoffice.common.util.holder.Holder;
+import edu.noia.myoffice.sale.common.listener.CartEventListener;
 import edu.noia.myoffice.sale.domain.aggregate.Cart;
 import edu.noia.myoffice.sale.domain.aggregate.CartMutableState;
 import edu.noia.myoffice.sale.domain.aggregate.CartState;
@@ -13,6 +14,7 @@ import edu.noia.myoffice.sale.domain.event.item.ItemRemovedFromCartEvent;
 import edu.noia.myoffice.sale.domain.repository.CartRepository;
 import edu.noia.myoffice.sale.domain.vo.*;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +24,11 @@ import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.spring.stereotype.Aggregate;
 
 @Slf4j
+@EqualsAndHashCode(callSuper = true)
 @Aggregate
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CartAdapter extends Cart {
+public class CartAdapter extends Cart implements CartEventListener {
 
     @AggregateIdentifier
     CartId aggregateId;
@@ -63,7 +66,7 @@ public class CartAdapter extends Cart {
 
     @EventSourcingHandler
     @Override
-    public void create(CartCreatedEvent event) {
+    public void created(CartCreatedEvent event) {
         LOG.debug(event.toString());
         aggregateId = event.getCartId();
         super.create(event);
@@ -71,25 +74,25 @@ public class CartAdapter extends Cart {
 
     @EventSourcingHandler
     @Override
-    public void addItem(ItemAddedToCartEvent event) {
+    public void itemAdded(ItemAddedToCartEvent event) {
         super.addItem(event);
     }
 
     @EventSourcingHandler
     @Override
-    public void removeItem(ItemRemovedFromCartEvent event) {
+    public void itemRemoved(ItemRemovedFromCartEvent event) {
         super.removeItem(event);
     }
 
     @EventSourcingHandler
     @Override
-    public void order(CartOrderedEvent event) {
+    public void ordered(CartOrderedEvent event) {
         super.order(event);
     }
 
     @EventSourcingHandler
     @Override
-    public void invoice(CartInvoicedEvent event) {
+    public void invoiced(CartInvoicedEvent event) {
         super.invoice(event);
     }
 

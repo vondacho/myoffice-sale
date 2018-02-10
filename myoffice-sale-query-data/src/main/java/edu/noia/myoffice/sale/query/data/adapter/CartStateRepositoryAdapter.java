@@ -6,8 +6,10 @@ import edu.noia.myoffice.sale.domain.vo.FolderId;
 import edu.noia.myoffice.sale.query.data.jpa.JpaCartState;
 import edu.noia.myoffice.sale.query.data.jpa.JpaCartStateRepository;
 import edu.noia.myoffice.sale.query.repository.CartStateRepository;
+import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +17,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CartStateRepositoryAdapter implements CartStateRepository {
 
     @NonNull

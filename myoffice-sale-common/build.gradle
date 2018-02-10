@@ -1,5 +1,5 @@
 dependencies {
     compile("edu.noia.myoffice:myoffice-sale-domain:${version}")
     compile("edu.noia.myoffice:myoffice-common-common:${myofficeCommonVersion}")
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.2'
+    compile("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
 }

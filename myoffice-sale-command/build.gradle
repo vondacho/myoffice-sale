@@ -2,5 +2,5 @@ dependencies {
     compile("edu.noia.myoffice:myoffice-sale-domain:${version}")
     compile("edu.noia.myoffice:myoffice-sale-common:${version}")
     compile 'org.springframework.boot:spring-boot-starter'
-    compile group: 'org.axonframework', name: 'axon-spring-boot-starter', version: '3.1.2'
+    compile("org.axonframework:axon-spring-boot-starter:${axonVersion}")
 }

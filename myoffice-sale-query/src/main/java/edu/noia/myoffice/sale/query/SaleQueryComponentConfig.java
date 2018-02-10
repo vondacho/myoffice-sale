@@ -6,11 +6,4 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan
 @Configuration
 public class SaleQueryComponentConfig {
-/*
-
-    @Bean
-    public CartUpdater cartUpdater(CartStateRepository cartRepository) {
-        return new CartUpdaterAdapter(cartRepository);
-    }
-*/
 }

@@ -1,6 +1,7 @@
 package edu.noia.myoffice.sale.command.handler;
 
 import edu.noia.myoffice.common.domain.event.EventPublisher;
+import edu.noia.myoffice.sale.common.listener.CartCommandListener;
 import edu.noia.myoffice.sale.domain.command.cart.CloseCartCommand;
 import edu.noia.myoffice.sale.domain.command.cart.CreateCartCommand;
 import edu.noia.myoffice.sale.domain.command.cart.OrderCartCommand;
@@ -13,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.CommandHandler;
 
 @Slf4j
-public class CartServiceAdapter extends CartService {
+public class CartServiceAdapter extends CartService implements CartCommandListener {
 
     public CartServiceAdapter(CartRepository cartRepository, EventPublisher eventPublisher) {
         super(cartRepository, eventPublisher);
@@ -21,7 +22,6 @@ public class CartServiceAdapter extends CartService {
 
     @CommandHandler
     public void create(CreateCartCommand command) {
-        LOG.debug("{} received command: {}", getClass(), command);
         cartRepository.save(null, command.getState());
     }
 

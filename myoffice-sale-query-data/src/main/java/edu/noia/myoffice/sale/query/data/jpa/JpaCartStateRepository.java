@@ -10,7 +10,7 @@ import org.springframework.data.rest.core.annotation.RestResource;
 import java.util.List;
 import java.util.Optional;
 
-@RepositoryRestResource
+@RepositoryRestResource(collectionResourceRel = "carts", itemResourceRel = "cart")
 public interface JpaCartStateRepository extends CrudRepository<JpaCartState, Long> {
 
     @RestResource
