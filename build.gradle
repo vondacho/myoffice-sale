@@ -1,7 +1,7 @@
 allprojects {
     apply plugin: 'java'
     group 'edu.noia.myoffice'
-    version = '0.0.2'
+    version = '0.0.3'
     repositories {
         jcenter()
         maven { url "https://repo.spring.io/milestone" }
@@ -94,6 +94,67 @@ subprojects {
 
     bootJar.enabled = false
     jar.enabled = true
+}
+
+project(':myoffice-sale-common') {
+    dependencies {
+        compile project(':myoffice-sale-domain')
+    }
+}
+
+project(':myoffice-sale-batch') {
+    dependencies {
+        compile project(':myoffice-sale-domain'),
+                project(':myoffice-sale-query-data')
+    }
+}
+
+project(':myoffice-sale-command') {
+    dependencies {
+        compile project(':myoffice-sale-common')
+    }
+}
+
+project(':myoffice-sale-command-data') {
+    dependencies {
+        compile project(':myoffice-sale-command')
+    }
+}
+
+project(':myoffice-sale-query') {
+    dependencies {
+        compile project(':myoffice-sale-common')
+    }
+}
+
+project(':myoffice-sale-query-data') {
+    dependencies {
+        compile project(':myoffice-sale-query')
+    }
+}
+
+project(':myoffice-sale-messaging') {
+    dependencies {
+        compile project(':myoffice-sale-domain')
+    }
+}
+
+project(':myoffice-sale-rest') {
+    dependencies {
+        compile project(':myoffice-sale-common')
+    }
+}
+
+project(':myoffice-sale-ui') {
+    dependencies {
+        compile project(':myoffice-sale-common'),
+                project(':myoffice-sale-command'),
+                project(':myoffice-sale-command-data'),
+                project(':myoffice-sale-query'),
+                project(':myoffice-sale-query-data'),
+                project(':myoffice-sale-messaging'),
+                project(':myoffice-sale-rest')
+    }
 }
 
 task wrapper(type: Wrapper) {
