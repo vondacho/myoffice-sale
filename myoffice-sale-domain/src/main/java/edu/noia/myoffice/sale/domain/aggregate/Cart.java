@@ -15,18 +15,20 @@ import edu.noia.myoffice.sale.domain.event.item.ItemRemovedFromCartEvent;
 import edu.noia.myoffice.sale.domain.repository.CartRepository;
 import edu.noia.myoffice.sale.domain.vo.*;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
+import static edu.noia.myoffice.common.util.exception.ExceptionSuppliers.itemNotFound;
 import static edu.noia.myoffice.common.util.validation.Rule.condition;
-import static edu.noia.myoffice.common.util.validation.Rule.violation;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
 
 @Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @FieldDefaults(level = AccessLevel.PROTECTED)
 public class Cart extends BaseEntity<CartId, CartState, CartMutableState> {
@@ -57,7 +59,7 @@ public class Cart extends BaseEntity<CartId, CartState, CartMutableState> {
     }
 
     public List<Event> getAudit() {
-        return audit != null ? emptyList() : unmodifiableList(audit.getEvents());
+        return audit != null ? unmodifiableList(audit.getEvents()) : emptyList();
     }
 
     public Amount getTotal() {
@@ -93,7 +95,7 @@ public class Cart extends BaseEntity<CartId, CartState, CartMutableState> {
         return state.getItem(itemId).map(cartItem -> {
             eventPublisher.accept(ItemRemovedFromCartEvent.of(getId(), itemId));
             return cartItem;
-        }).orElseThrow(violation(String.format("Item {} of cart {} not found", itemId, getId())));
+        }).orElseThrow(itemNotFound(CartItem.class, itemId, Cart.class, getId()));
     }
 
     public void order(EventPublisher eventPublisher) {
