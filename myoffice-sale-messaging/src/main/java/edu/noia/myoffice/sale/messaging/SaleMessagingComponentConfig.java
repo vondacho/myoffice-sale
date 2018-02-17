@@ -4,6 +4,7 @@ import edu.noia.myoffice.common.domain.command.CommandPublisher;
 import edu.noia.myoffice.common.domain.event.EventPublisher;
 import edu.noia.myoffice.sale.messaging.adapter.CommandPublisherAdapter;
 import edu.noia.myoffice.sale.messaging.adapter.EventPublisherAdapter;
+import edu.noia.myoffice.sale.messaging.exception.CartCommandCallback;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventBus;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +19,12 @@ public class SaleMessagingComponentConfig {
     }
 
     @Bean
-    public CommandPublisher commandPublisher(CommandGateway commandGateway) {
-        return new CommandPublisherAdapter(commandGateway);
+    public CommandPublisher commandPublisher(CommandGateway commandGateway, CartCommandCallback cartCommandCallback) {
+        return new CommandPublisherAdapter(commandGateway, cartCommandCallback);
+    }
+
+    @Bean
+    public CartCommandCallback exceptionHandlerCallback(EventPublisher eventPublisher) {
+        return new CartCommandCallback(eventPublisher);
     }
 }

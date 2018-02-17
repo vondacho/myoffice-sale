@@ -68,5 +68,4 @@ public class CartService {
     private Holder<Cart> findCart(CartId cartId) {
         return cartRepository.findOne(cartId).orElseThrow(notFound(Cart.class, cartId));
     }
-
 }

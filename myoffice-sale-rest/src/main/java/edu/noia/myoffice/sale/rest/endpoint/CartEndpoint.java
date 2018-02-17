@@ -14,10 +14,14 @@ import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
+
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.notFound;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,36 +33,43 @@ public class CartEndpoint {
     CommandPublisher commandPublisher;
 
     @PostMapping
-    public void create(@RequestBody CartSample state) {
+    public ResponseEntity create(@RequestBody CartSample state) {
         commandPublisher.accept(CreateCartCommand.of(state));
+        return noContent().build();
     }
 
     @PutMapping("/{id}/items")
-    public void addItem(
+    public ResponseEntity addItem(
             @PathVariable("id") CartId cartId,
             @RequestBody CartItem cartItem) {
         commandPublisher.accept(AddItemToCartCommand.of(cartId, cartItem));
+        return noContent().build();
     }
 
     @DeleteMapping("{id}/items/{itemId}")
-    public void removeItem(
+    public ResponseEntity removeItem(
             @PathVariable("id") CartId cartId,
             @PathVariable("itemId") CartItemId cartItemId) {
         commandPublisher.accept(RemoveItemFromCartCommand.of(cartId, cartItemId));
+        return noContent().build();
     }
 
     @PutMapping("{id}/ordering")
-    public void order(@PathVariable("id") CartId cartId) {
+    public ResponseEntity order(@PathVariable("id") CartId cartId) {
         commandPublisher.accept(OrderCartCommand.of(cartId));
+        return noContent().build();
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable("id") CartId cartId) {
+    public ResponseEntity delete(@PathVariable("id") CartId cartId) {
+        return notFound().build();
     }
 
     @InitBinder
     public void dataBinding(WebDataBinder binder) {
         binder.registerCustomEditor(CartId.class,
                 new IdentifiantPropertyEditorSupport<>(s-> CartId.of(UUID.fromString(s))));
+        binder.registerCustomEditor(CartItemId.class,
+                new IdentifiantPropertyEditorSupport<>(s -> CartItemId.of(UUID.fromString(s))));
     }
 }
