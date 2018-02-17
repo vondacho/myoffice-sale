@@ -1,4 +1,4 @@
-package edu.noia.myoffice.sale.messaging.adapter;
+package edu.noia.myoffice.sale.messaging.adapter.axon;
 
 import edu.noia.myoffice.common.domain.command.Command;
 import edu.noia.myoffice.common.domain.command.CommandPublisher;

@@ -1,4 +1,4 @@
-package edu.noia.myoffice.sale.messaging.adapter;
+package edu.noia.myoffice.sale.messaging.adapter.axon;
 
 import edu.noia.myoffice.common.domain.event.EventPayload;
 import edu.noia.myoffice.common.domain.event.EventPublisher;

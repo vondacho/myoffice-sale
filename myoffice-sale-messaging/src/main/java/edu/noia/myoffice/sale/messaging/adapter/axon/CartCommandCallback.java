@@ -1,4 +1,4 @@
-package edu.noia.myoffice.sale.messaging.exception;
+package edu.noia.myoffice.sale.messaging.adapter.axon;
 
 import edu.noia.myoffice.common.domain.event.EventPublisher;
 import edu.noia.myoffice.common.util.exception.EntityNotFoundException;
