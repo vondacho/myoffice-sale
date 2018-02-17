@@ -1,7 +1,7 @@
 package edu.noia.myoffice.sale.command.data;
 
-import edu.noia.myoffice.sale.command.aggregate.CartAdapter;
-import edu.noia.myoffice.sale.command.data.repository.CartRepositoryAdapter;
+import edu.noia.myoffice.sale.command.aggregate.axon.AxonCart;
+import edu.noia.myoffice.sale.command.data.repository.axon.AxonCartRepository;
 import edu.noia.myoffice.sale.domain.repository.CartRepository;
 import org.axonframework.eventhandling.saga.repository.SagaStore;
 import org.axonframework.eventhandling.saga.repository.inmemory.InMemorySagaStore;
@@ -31,6 +31,6 @@ public class SaleCommandDataComponentConfig {
 
     @Bean
     public CartRepository cartRepository() {
-        return new CartRepositoryAdapter(axonConfiguration.repository(CartAdapter.class));
+        return new AxonCartRepository(axonConfiguration.repository(AxonCart.class));
     }
 }

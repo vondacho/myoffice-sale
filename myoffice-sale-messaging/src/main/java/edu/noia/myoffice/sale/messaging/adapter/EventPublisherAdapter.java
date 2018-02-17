@@ -1,6 +1,6 @@
 package edu.noia.myoffice.sale.messaging.adapter;
 
-import edu.noia.myoffice.common.domain.event.Event;
+import edu.noia.myoffice.common.domain.event.EventPayload;
 import edu.noia.myoffice.common.domain.event.EventPublisher;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ public class EventPublisherAdapter implements EventPublisher {
     EventBus eventBus;
 
     @Override
-    public void accept(Event event) {
+    public void accept(EventPayload event) {
         eventBus.publish(asEventMessage(event));
     }
 }

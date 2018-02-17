@@ -1,1 +1,1 @@
-web: java -D$JAVA_OPTS -jar myoffice-invoicing-ui/build/libs/myoffice-sale-ui-0.0.1.jar --server.port=$PORT --spring.profiles.active=inmemory,sampledata
+web: java -D$JAVA_OPTS -jar myoffice-sale-ui/build/libs/myoffice-sale-ui-0.0.1.jar --server.port=$PORT --spring.profiles.active=inmemory,sampledata

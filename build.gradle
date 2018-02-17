@@ -1,7 +1,8 @@
+
 allprojects {
     apply plugin: 'java'
     group 'edu.noia.myoffice'
-    version = '0.0.3'
+    version = '0.0.4'
     repositories {
         jcenter()
         maven { url "https://repo.spring.io/milestone" }
@@ -21,6 +22,7 @@ buildscript {
     ext {
         springBootVersion = '2.0.0.M7'
         springHalBrowserVersion = '3.0.3.RELEASE'
+        springfoxVersion = '2.8.0'
         lombokVersion = '1.16.18'
         mokitoVersion = '2.8.47'
         jacksonVersion = '2.9.2'
@@ -145,7 +147,7 @@ project(':myoffice-sale-rest') {
     }
 }
 
-project(':myoffice-sale-ui') {
+project(':myoffice-sale-application') {
     dependencies {
         compile project(':myoffice-sale-common'),
                 project(':myoffice-sale-command'),

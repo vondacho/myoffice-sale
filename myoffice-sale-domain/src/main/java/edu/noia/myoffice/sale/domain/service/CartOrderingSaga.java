@@ -7,11 +7,11 @@ import edu.noia.myoffice.sale.domain.command.article.ReserveArticleListCommand;
 import edu.noia.myoffice.sale.domain.command.cart.CloseCartCommand;
 import edu.noia.myoffice.sale.domain.command.cart.InvoiceCartCommand;
 import edu.noia.myoffice.sale.domain.command.order.CancelOrderCommand;
-import edu.noia.myoffice.sale.domain.event.article.ArticleListConfirmedEvent;
-import edu.noia.myoffice.sale.domain.event.article.ArticleListReservedEvent;
-import edu.noia.myoffice.sale.domain.event.article.SystemFailedToReserveArticleListEvent;
-import edu.noia.myoffice.sale.domain.event.cart.CartOrderedEvent;
-import edu.noia.myoffice.sale.domain.event.invoice.InvoiceCreatedEvent;
+import edu.noia.myoffice.sale.domain.event.article.ArticleListConfirmedEventPayload;
+import edu.noia.myoffice.sale.domain.event.article.ArticleListReservedEventPayload;
+import edu.noia.myoffice.sale.domain.event.article.SystemFailedToReserveArticleListEventPayload;
+import edu.noia.myoffice.sale.domain.event.cart.CartOrderedEventPayload;
+import edu.noia.myoffice.sale.domain.event.invoice.InvoiceCreatedEventPayload;
 import edu.noia.myoffice.sale.domain.event.order.OrderCancelledEvent;
 import edu.noia.myoffice.sale.domain.vo.CartId;
 import edu.noia.myoffice.sale.domain.vo.CartType;
@@ -28,7 +28,7 @@ public abstract class CartOrderingSaga {
      * Start of saga
      * @param event
      */
-    public void on(CartOrderedEvent event,CommandPublisher commandPublisher) {
+    public void on(CartOrderedEventPayload event, CommandPublisher commandPublisher) {
         setFolderId(event.getFolderId());
         setCartId(event.getCartId());
         setAmount(event.getAmount());
@@ -45,7 +45,7 @@ public abstract class CartOrderingSaga {
      * Continuation of saga
      * @param event
      */
-    public void on(ArticleListReservedEvent event, CommandPublisher commandPublisher) {
+    public void on(ArticleListReservedEventPayload event, CommandPublisher commandPublisher) {
         commandPublisher.accept(ConfirmArticleListCommand.of(getCartId(), new HashMap<>()));
         commandPublisher.accept(InvoiceCartCommand.of(getCartId(), getFolderId(), getAmount()));
     }
@@ -54,7 +54,7 @@ public abstract class CartOrderingSaga {
      * Continuation or end of saga
      * @param event
      */
-    public void on(ArticleListConfirmedEvent event, CommandPublisher commandPublisher) {
+    public void on(ArticleListConfirmedEventPayload event, CommandPublisher commandPublisher) {
         setArticleListConfirmed(true);
         if (getInvoiceId() != null) {
             commandPublisher.accept(CloseCartCommand.of(getCartId(), getInvoiceId()));
@@ -65,7 +65,7 @@ public abstract class CartOrderingSaga {
      * Continuation or end of saga
      * @param event
      */
-    public void on(InvoiceCreatedEvent event, CommandPublisher commandPublisher) {
+    public void on(InvoiceCreatedEventPayload event, CommandPublisher commandPublisher) {
         setInvoiceId(event.getInvoiceId());
         if (isArticleListConfirmed()) {
             commandPublisher.accept(CloseCartCommand.of(getCartId(), event.getInvoiceId()));
@@ -76,7 +76,7 @@ public abstract class CartOrderingSaga {
      * Compensation
      * @param event
      */
-    public void on(SystemFailedToReserveArticleListEvent event, CommandPublisher commandPublisher) {
+    public void on(SystemFailedToReserveArticleListEventPayload event, CommandPublisher commandPublisher) {
         commandPublisher.accept(CancelOrderCommand.of(getCartId()));
     }
 

@@ -3,10 +3,10 @@ package edu.noia.myoffice.sale.domain.service;
 import edu.noia.myoffice.common.domain.command.CommandPublisher;
 import edu.noia.myoffice.sale.domain.command.article.ReserveArticleCommand;
 import edu.noia.myoffice.sale.domain.command.item.DeposeItemIntoCartCommand;
-import edu.noia.myoffice.sale.domain.event.article.SystemFailedToReserveArticleEvent;
-import edu.noia.myoffice.sale.domain.event.article.SystemReservedArticleEvent;
-import edu.noia.myoffice.sale.domain.event.item.ItemAddedToCartEvent;
-import edu.noia.myoffice.sale.domain.event.item.ItemCreatedEvent;
+import edu.noia.myoffice.sale.domain.event.article.SystemFailedToReserveArticleEventPayload;
+import edu.noia.myoffice.sale.domain.event.article.SystemReservedArticleEventPayload;
+import edu.noia.myoffice.sale.domain.event.item.ItemAddedToCartEventPayload;
+import edu.noia.myoffice.sale.domain.event.item.ItemCreatedEventPayload;
 import edu.noia.myoffice.sale.domain.vo.CartId;
 import edu.noia.myoffice.sale.domain.vo.CartItem;
 import lombok.NoArgsConstructor;
@@ -19,7 +19,7 @@ public abstract class ItemAdditionSaga {
      *
      * @param event
      */
-    public void on(ItemCreatedEvent event, CommandPublisher commandPublisher) {
+    public void on(ItemCreatedEventPayload event, CommandPublisher commandPublisher) {
         setCartId(event.getCartId());
         setCartItem(event.getCartItem());
         commandPublisher.accept(
@@ -34,7 +34,7 @@ public abstract class ItemAdditionSaga {
      *
      * @param event
      */
-    public void on(SystemReservedArticleEvent event, CommandPublisher commandPublisher) {
+    public void on(SystemReservedArticleEventPayload event, CommandPublisher commandPublisher) {
         commandPublisher.accept(
                 DeposeItemIntoCartCommand.of(
                         event.getCartId(),
@@ -46,7 +46,7 @@ public abstract class ItemAdditionSaga {
      *
      * @param event
      */
-    public void on(ItemAddedToCartEvent event) {
+    public void on(ItemAddedToCartEventPayload event) {
     }
 
     /**
@@ -54,7 +54,7 @@ public abstract class ItemAdditionSaga {
      *
      * @param event
      */
-    public void on(SystemFailedToReserveArticleEvent event) {
+    public void on(SystemFailedToReserveArticleEventPayload event) {
     }
 
     protected abstract void setCartId(CartId cartId);

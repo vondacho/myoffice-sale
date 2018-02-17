@@ -9,7 +9,7 @@ import edu.noia.myoffice.sale.domain.command.cart.OrderCartCommand;
 import edu.noia.myoffice.sale.domain.command.item.AddItemToCartCommand;
 import edu.noia.myoffice.sale.domain.command.item.DeposeItemIntoCartCommand;
 import edu.noia.myoffice.sale.domain.command.item.RemoveItemFromCartCommand;
-import edu.noia.myoffice.sale.domain.event.item.ItemCreatedEvent;
+import edu.noia.myoffice.sale.domain.event.item.ItemCreatedEventPayload;
 import edu.noia.myoffice.sale.domain.repository.CartRepository;
 import edu.noia.myoffice.sale.domain.vo.CartId;
 import edu.noia.myoffice.sale.domain.vo.CartType;
@@ -38,7 +38,7 @@ public class CartService {
     public void addItem(AddItemToCartCommand command) {
         applyOnCart(command.getCartId(), cart -> {
             if (cart.getType() == CartType.LOG) {
-                eventPublisher.accept(ItemCreatedEvent.of(cart.getId(), command.getCartItem()));
+                eventPublisher.accept(ItemCreatedEventPayload.of(cart.getId(), command.getCartItem()));
             } else {
                 cart.addItem(command.getCartItem(), eventPublisher);
             }

@@ -4,6 +4,7 @@ import edu.noia.myoffice.common.serializer.CommonSerializers;
 import edu.noia.myoffice.sale.common.mixin.CartItemMixin;
 import edu.noia.myoffice.sale.common.serializer.SaleSerializers;
 import edu.noia.myoffice.sale.domain.vo.CartItem;
+import edu.noia.myoffice.sale.rest.handler.axon.AxonSaleEventBrokerProxy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -18,5 +19,10 @@ public class SaleRestApplicationConfig {
         return new Jackson2ObjectMapperBuilder()
                 .mixIn(CartItem.class, CartItemMixin.class)
                 .modules(CommonSerializers.getModule(), SaleSerializers.getModule());
+    }
+
+    @Bean
+    public AxonSaleEventBrokerProxy saleEventSource() {
+        return new AxonSaleEventBrokerProxy();
     }
 }
