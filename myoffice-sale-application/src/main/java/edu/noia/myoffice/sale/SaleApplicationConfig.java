@@ -15,8 +15,7 @@ import org.springframework.context.annotation.Import;
         SaleQueryComponentConfig.class,
         SaleQueryDataComponentConfig.class,
         SaleMessagingComponentConfig.class,
-        SaleRestApplicationConfig.class //,
-        // springfox.documentation.spring.data.rest.configuration.SpringDataRestConfiguration.class
+        SaleRestApplicationConfig.class
 })
 @Configuration
 public class SaleApplicationConfig {
