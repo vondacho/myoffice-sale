@@ -11,7 +11,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
-// @Import(springfox.documentation.spring.data.rest.configuration.SpringDataRestConfiguration.class)
 @EnableSwagger2
 @Configuration
 public class SpringfoxConfiguration {
@@ -19,13 +18,11 @@ public class SpringfoxConfiguration {
     @Bean
     public Docket petApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("full-sale-api")
+                .groupName("myOffice API")
                 .apiInfo(apiInfo())
                 .select()
                 .paths(salePaths())
                 .build();
-        //.securitySchemes(newArrayList(oauth()))
-        //.securityContexts(newArrayList(securityContext()));
     }
 
     private Predicate<String> salePaths() {
@@ -35,13 +32,7 @@ public class SpringfoxConfiguration {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("myOffice Sale API")
-                .description("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum " +
-                        "has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a " +
-                        "galley of type and scrambled it to make a type specimen book. It has survived not only five " +
-                        "centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
-                        "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum " +
-                        "passages, and more recently with desktop publishing software like Aldus PageMaker including " +
-                        "versions of Lorem Ipsum.")
+                .description("The Sale API is a part of the myOffice API and provides endpoints for Cart entity management.")
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://github.com/springfox/springfox/blob/master/LICENSE")
                 .version("1.0")
