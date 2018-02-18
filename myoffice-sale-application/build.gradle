@@ -1,6 +1,5 @@
 dependencies {
     compile("edu.noia.myoffice:myoffice-sale-common:${version}")
-    compile("edu.noia.myoffice:myoffice-sale-domain:${version}")
     compile("edu.noia.myoffice:myoffice-sale-command:${version}")
     compile("edu.noia.myoffice:myoffice-sale-command-data:${version}")
     compile("edu.noia.myoffice:myoffice-sale-query:${version}")
