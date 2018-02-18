@@ -1,4 +1,5 @@
 dependencies {
     compile("edu.noia.myoffice:myoffice-common-domain:${myofficeCommonVersion}")
     compile("edu.noia.myoffice:myoffice-common-util:${myofficeCommonVersion}")
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
 }

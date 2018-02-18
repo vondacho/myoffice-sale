@@ -15,10 +15,10 @@ public class CommandPublisherAdapter implements CommandPublisher {
     @NonNull
     CommandGateway commandGateway;
     @NonNull
-    CommandCallback cartCommandCallback;
+    CommandCallback saleCommandCallback;
 
     @Override
     public void accept(Command command) {
-        commandGateway.send(asCommandMessage(command), cartCommandCallback);
+        commandGateway.send(asCommandMessage(command), saleCommandCallback);
     }
 }

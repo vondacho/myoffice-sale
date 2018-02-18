@@ -32,7 +32,7 @@ public class SpringfoxConfiguration {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("myOffice Sale API")
-                .description("The Sale API is a part of the myOffice API and provides endpoints for Cart entity management.")
+                .description("The Sale API is a part of the myOffice API and provides endpoints for Cart entity management and sale event stream consumption.")
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://github.com/springfox/springfox/blob/master/LICENSE")
                 .version("1.0")
