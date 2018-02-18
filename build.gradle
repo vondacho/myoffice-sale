@@ -144,6 +144,7 @@ project(':myoffice-sale-messaging') {
 project(':myoffice-sale-rest') {
     dependencies {
         compile project(':myoffice-sale-common')
+        compile project(':myoffice-sale-query-data')
     }
 }
 

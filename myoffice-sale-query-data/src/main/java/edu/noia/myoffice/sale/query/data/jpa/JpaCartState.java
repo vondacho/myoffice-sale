@@ -10,12 +10,14 @@ import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Audited
 @Entity
 @EqualsAndHashCode(of = "id", callSuper = false)
 @Accessors(chain=true)
