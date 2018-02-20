@@ -22,6 +22,8 @@ buildscript {
     ext {
         springBootVersion = '2.0.0.M7'
         springHalBrowserVersion = '3.0.3.RELEASE'
+        springEnversVersion = '2.0.3.RELEASE'
+        springHateoasVersion = '0.24.0.RELEASE'
         springfoxVersion = '2.8.0'
         lombokVersion = '1.16.18'
         mokitoVersion = '2.8.47'
