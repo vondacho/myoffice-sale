@@ -7,8 +7,6 @@ import edu.noia.myoffice.sale.domain.vo.Article;
 import edu.noia.myoffice.sale.domain.vo.ArticleId;
 import edu.noia.myoffice.sale.domain.vo.CartItem;
 import edu.noia.myoffice.sale.domain.vo.CartItemId;
-import org.hibernate.HibernateException;
-import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.type.DateType;
 import org.hibernate.type.LongType;
@@ -20,7 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.UUID;
 
 public class CartItemConverter implements UserType {
@@ -44,17 +42,17 @@ public class CartItemConverter implements UserType {
     }
 
     @Override
-    public boolean equals(Object x, Object y) throws HibernateException {
-        return x != null ? x.equals(y) : false;
+    public boolean equals(Object x, Object y) {
+        return x != null && x.equals(y);
     }
 
     @Override
-    public int hashCode(Object x) throws HibernateException {
+    public int hashCode(Object x) {
         return x.hashCode();
     }
 
     @Override
-    public Object nullSafeGet(ResultSet rs, String[] names, SharedSessionContractImplementor session, Object owner) throws HibernateException, SQLException {
+    public Object nullSafeGet(ResultSet rs, String[] names, SharedSessionContractImplementor session, Object owner) throws SQLException {
         try {
             return CartItem.of(
                     CartItemId.of(UUID.fromString(rs.getString(names[0]))),
@@ -64,8 +62,8 @@ public class CartItemConverter implements UserType {
                             rs.getString(names[3]),
                             Tariff.of(
                                     Amount.ofCentimes(rs.getLong(names[4])),
-                                    Unit.valueOf(rs.getString(names[5])))), null);
-                    // names[6] != null ? LocalDateTime.rs.getTimestamp(names[6])) : null);
+                                    Unit.valueOf(rs.getString(names[5])))),
+                    rs.getTimestamp(names[6]) != null ? rs.getTimestamp(names[6]).toLocalDateTime() : null);
         }
         catch (IllegalArgumentException e) {
             return null;
@@ -73,7 +71,7 @@ public class CartItemConverter implements UserType {
     }
 
     @Override
-    public void nullSafeSet(PreparedStatement st, Object value, int index, SharedSessionContractImplementor session) throws HibernateException, SQLException {
+    public void nullSafeSet(PreparedStatement st, Object value, int index, SharedSessionContractImplementor session) throws SQLException {
         CartItem cartItem = (CartItem)value;
         // item id
         st.setString(index++, cartItem.getId().getId().toString());
@@ -88,11 +86,12 @@ public class CartItemConverter implements UserType {
         // tariff unit
         st.setString(index++, cartItem.getArticle().getTariff().getUnit().toString());
         // item timestamp
-        st.setTimestamp(index++, cartItem.getTimestamp() != null ? Timestamp.valueOf(cartItem.getTimestamp()) : null);
+        // TODO to fix the absence of value for cohabitation with Envers
+        st.setTimestamp(index++, cartItem.getTimestamp() != null ? Timestamp.valueOf(cartItem.getTimestamp()) : Timestamp.from(Instant.now()));
     }
 
     @Override
-    public Object deepCopy(Object value) throws HibernateException {
+    public Object deepCopy(Object value) {
         return value;
     }
 
@@ -102,17 +101,17 @@ public class CartItemConverter implements UserType {
     }
 
     @Override
-    public Serializable disassemble(Object value) throws HibernateException {
+    public Serializable disassemble(Object value) {
         return (Serializable)value;
     }
 
     @Override
-    public Object assemble(Serializable cached, Object owner) throws HibernateException {
+    public Object assemble(Serializable cached, Object owner) {
         return cached;
     }
 
     @Override
-    public Object replace(Object original, Object target, Object owner) throws HibernateException {
+    public Object replace(Object original, Object target, Object owner) {
         return original;
     }
 }

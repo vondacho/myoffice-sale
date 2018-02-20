@@ -5,12 +5,11 @@ import edu.noia.myoffice.sale.query.data.adapter.CartStateRepositoryAdapter;
 import edu.noia.myoffice.sale.query.data.hateoas.CartIdResourceProcessor;
 import edu.noia.myoffice.sale.query.data.jpa.JpaCartState;
 import edu.noia.myoffice.sale.query.data.jpa.JpaCartStateRepository;
-import edu.noia.myoffice.sale.query.data.jpa.JpaRepo;
 import edu.noia.myoffice.sale.query.repository.CartStateRepository;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.envers.repository.support.EnversRevisionRepositoryFactoryBean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.core.support.EntityLookupSupport;
@@ -24,13 +23,7 @@ import java.io.Serializable;
 import java.util.Optional;
 import java.util.UUID;
 
-@EnableJpaRepositories(
-        basePackageClasses = JpaCartStateRepository.class,
-        includeFilters = @ComponentScan.Filter(JpaRepo.class))
-/*@EnableJpaRepositories(
-        basePackageClasses = JpaCartStateRevisionRepository.class,
-        includeFilters = @ComponentScan.Filter(JpaRevisionRepo.class),
-        repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class)*/
+@EnableJpaRepositories(repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class)
 @EntityScan
 @Configuration
 public class SaleQueryDataComponentConfig {

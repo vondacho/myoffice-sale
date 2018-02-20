@@ -2,14 +2,17 @@ package edu.noia.myoffice.sale.rest.endpoint;
 
 import edu.noia.myoffice.common.rest.util.IdentifiantPropertyEditorSupport;
 import edu.noia.myoffice.sale.domain.vo.CartId;
+import edu.noia.myoffice.sale.query.data.jpa.JpaCartStateRepository;
+import edu.noia.myoffice.sale.rest.dto.CartRevisionDto;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.history.Revisions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -20,9 +23,12 @@ import static org.springframework.http.ResponseEntity.ok;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CartRevisionEndpoint {
 
+    @Autowired
+    JpaCartStateRepository repository;
+
     @GetMapping(value = "/{id}/revisions")
-    public ResponseEntity<Revisions> cartRevisions(@PathVariable(value = "id") Long primaryId) {
-        return ok(Revisions.none());
+    public ResponseEntity<List<CartRevisionDto>> cartRevisions(@PathVariable(value = "id") Long primaryId) {
+        return ok(CartRevisionDto.from(repository.findRevisions(primaryId)));
     }
 
     @InitBinder
