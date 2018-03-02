@@ -1,10 +1,7 @@
 package edu.noia.myoffice.sale.domain.aggregate;
 
 import edu.noia.myoffice.common.domain.entity.EntityState;
-import edu.noia.myoffice.sale.domain.vo.CartItem;
-import edu.noia.myoffice.sale.domain.vo.CartItemId;
-import edu.noia.myoffice.sale.domain.vo.CartType;
-import edu.noia.myoffice.sale.domain.vo.FolderId;
+import edu.noia.myoffice.sale.domain.vo.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.Collections;
@@ -30,4 +27,16 @@ public interface CartState extends EntityState {
     default Optional<CartItem> getItem(CartItemId itemId) {
         return Optional.empty();
     }
+
+    CartState add(CartItem... item);
+
+    Optional<CartItem> remove(CartItemId itemId);
+
+    OrderId getOrderId();
+
+    CartState setOrderId(OrderId orderId);
+
+    InvoiceId getInvoiceId();
+
+    CartState setInvoiceId(InvoiceId invoiceId);
 }

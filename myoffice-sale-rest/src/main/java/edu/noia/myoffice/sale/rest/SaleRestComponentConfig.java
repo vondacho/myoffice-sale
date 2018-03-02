@@ -12,7 +12,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 @ComponentScan
 @Configuration
-public class SaleRestApplicationConfig {
+public class SaleRestComponentConfig {
 
     @Bean
     public Jackson2ObjectMapperBuilder jacksonBuilder() {

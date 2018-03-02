@@ -33,16 +33,16 @@ import static java.util.Collections.unmodifiableList;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @FieldDefaults(level = AccessLevel.PROTECTED)
-public class Cart extends BaseEntity<CartId, CartState, CartMutableState> {
+public class Cart extends BaseEntity<Cart, CartId, CartState> {
 
     EntityAudit audit;
 
-    protected Cart(CartMutableState state) {
+    protected Cart(CartState state) {
         super(CartId.random(), state);
     }
 
     public static Cart of(CartState state, EventPublisher eventPublisher) {
-        Cart cart = new Cart(CartMutableSample.of(validateBean(state)));
+        Cart cart = new Cart(CartSample.of(validateBean(state)));
         eventPublisher.accept(CartCreatedEventPayload.of(cart.getId(), CartSample.of(state)));
         return cart;
     }
@@ -56,12 +56,13 @@ public class Cart extends BaseEntity<CartId, CartState, CartMutableState> {
     }
 
     @Override
-    protected CartState toImmutableState() {
-        return CartSample.of(state);
+    public List<Event> domainEvents() {
+        return audit != null ? unmodifiableList(audit.getEvents()) : emptyList();
     }
 
-    public List<Event> getAudit() {
-        return audit != null ? unmodifiableList(audit.getEvents()) : emptyList();
+    @Override
+    protected CartState cloneState() {
+        return CartSample.of(state);
     }
 
     public Amount getTotal() {
@@ -123,7 +124,7 @@ public class Cart extends BaseEntity<CartId, CartState, CartMutableState> {
 
     protected void create(CartCreatedEventPayload event, Instant timestamp) {
         setId(event.getCartId());
-        setState(CartMutableSample.of(event.getCartState()));
+        setState(CartSample.of(event.getCartState()));
         audit = new EntityAudit(BaseEvent.of(event, timestamp));
     }
 

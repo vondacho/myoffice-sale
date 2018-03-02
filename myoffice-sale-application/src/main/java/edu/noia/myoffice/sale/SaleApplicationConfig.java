@@ -5,7 +5,7 @@ import edu.noia.myoffice.sale.command.data.SaleCommandDataComponentConfig;
 import edu.noia.myoffice.sale.messaging.SaleMessagingComponentConfig;
 import edu.noia.myoffice.sale.query.SaleQueryComponentConfig;
 import edu.noia.myoffice.sale.query.data.SaleQueryDataComponentConfig;
-import edu.noia.myoffice.sale.rest.SaleRestApplicationConfig;
+import edu.noia.myoffice.sale.rest.SaleRestComponentConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Import;
         SaleQueryComponentConfig.class,
         SaleQueryDataComponentConfig.class,
         SaleMessagingComponentConfig.class,
-        SaleRestApplicationConfig.class
+        SaleRestComponentConfig.class
 })
 @Configuration
 public class SaleApplicationConfig {

@@ -3,7 +3,6 @@ package edu.noia.myoffice.sale.command.aggregate.axon;
 import edu.noia.myoffice.common.domain.event.EventPublisher;
 import edu.noia.myoffice.common.util.holder.Holder;
 import edu.noia.myoffice.sale.domain.aggregate.Cart;
-import edu.noia.myoffice.sale.domain.aggregate.CartMutableState;
 import edu.noia.myoffice.sale.domain.aggregate.CartState;
 import edu.noia.myoffice.sale.domain.event.cart.CartCreatedEventPayload;
 import edu.noia.myoffice.sale.domain.event.cart.CartInvoicedEventPayload;
@@ -33,13 +32,13 @@ public class AxonCart extends Cart {
     @AggregateIdentifier
     CartId aggregateId;
 
-    private AxonCart(CartMutableState cartState) {
+    private AxonCart(CartState cartState) {
         super(cartState);
     }
 
     public static AxonCart of(CartState state) {
         validateBean(state);
-        AxonCart cart = new AxonCart(CartMutableSample.of(state));
+        AxonCart cart = new AxonCart(CartSample.of(state));
         AggregateLifecycle.apply(CartCreatedEventPayload.of(cart.getId(), CartSample.of(state)));
         return cart;
     }
