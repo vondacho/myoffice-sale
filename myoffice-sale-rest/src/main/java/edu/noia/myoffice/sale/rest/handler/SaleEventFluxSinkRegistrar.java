@@ -11,6 +11,9 @@ import java.util.UUID;
 @Slf4j
 public class SaleEventFluxSinkRegistrar {
 
+    private SaleEventFluxSinkRegistrar() {
+    }
+
     public static void register(FluxSink<SaleEvent> fluxSink, SaleEventBroker broker) {
         register(fluxSink, Processors.noProcessing, broker);
     }

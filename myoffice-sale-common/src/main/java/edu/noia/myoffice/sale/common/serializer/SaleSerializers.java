@@ -8,8 +8,6 @@ import edu.noia.myoffice.common.serializer.CommonSerializers;
 import edu.noia.myoffice.sale.domain.vo.ArticleId;
 import edu.noia.myoffice.sale.domain.vo.CartId;
 import edu.noia.myoffice.sale.domain.vo.FolderId;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
@@ -20,8 +18,10 @@ import java.util.UUID;
 
 import static edu.noia.myoffice.common.util.converter.Converters.toLocalDateTimeUTC;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SaleSerializers {
+
+    private SaleSerializers() {
+    }
 
     public static Module getModule() {
         SimpleModule module = new SimpleModule();

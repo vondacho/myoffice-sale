@@ -87,7 +87,7 @@ public class CartItemConverter implements UserType {
         st.setString(index++, cartItem.getArticle().getTariff().getUnit().toString());
         // item timestamp
         // FIXME the absence of value for cohabitation with Envers
-        st.setTimestamp(index++, cartItem.getTimestamp() != null ? Timestamp.valueOf(cartItem.getTimestamp()) : Timestamp.from(Instant.now()));
+        st.setTimestamp(index, cartItem.getTimestamp() != null ? Timestamp.valueOf(cartItem.getTimestamp()) : Timestamp.from(Instant.now()));
     }
 
     @Override

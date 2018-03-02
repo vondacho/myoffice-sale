@@ -38,7 +38,7 @@ public class AxonCartRepository implements CartRepository {
         try {
             return new CartHolder(repository.newInstance(() -> AxonCart.of(state)));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 

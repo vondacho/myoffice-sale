@@ -32,6 +32,7 @@ public class SaleEventFluxSinkSubscriber extends DefaultBroker.Subscriber<SaleEv
         this.fluxSink = fluxSink;
     }
 
+    @Override
     public void complete() {
         if (!fluxSink.isCancelled()) {
             fluxSink.complete();
