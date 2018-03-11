@@ -1,6 +1,6 @@
 package edu.noia.myoffice.sale.command.aggregate.axon;
 
-import edu.noia.myoffice.common.domain.event.EventPublisher;
+import edu.noia.myoffice.common.domain.event.EventPayload;
 import edu.noia.myoffice.common.util.holder.Holder;
 import edu.noia.myoffice.sale.domain.aggregate.Cart;
 import edu.noia.myoffice.sale.domain.aggregate.CartState;
@@ -22,6 +22,7 @@ import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.spring.stereotype.Aggregate;
 
 import java.time.Instant;
+import java.util.function.Consumer;
 
 @EqualsAndHashCode(callSuper = true)
 @Aggregate
@@ -44,22 +45,22 @@ public class AxonCart extends Cart {
     }
 
     @Override
-    public void addItem(CartItem cartItem, EventPublisher eventPublisher) {
+    public void addItem(CartItem cartItem, Consumer<EventPayload> eventPublisher) {
         super.addItem(cartItem, AggregateLifecycle::apply);
     }
 
     @Override
-    public CartItem removeItem(CartItemId itemId, EventPublisher eventPublisher) {
+    public CartItem removeItem(CartItemId itemId, Consumer<EventPayload> eventPublisher) {
         return super.removeItem(itemId, AggregateLifecycle::apply);
     }
 
     @Override
-    public void order(EventPublisher eventPublisher) {
+    public void order(Consumer<EventPayload> eventPublisher) {
         super.order(AggregateLifecycle::apply);
     }
 
     @Override
-    public void close(InvoiceId invoiceId, EventPublisher eventPublisher) {
+    public void close(InvoiceId invoiceId, Consumer<EventPayload> eventPublisher) {
         super.close(invoiceId, AggregateLifecycle::apply);
     }
 

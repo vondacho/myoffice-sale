@@ -1,7 +1,7 @@
 package edu.noia.myoffice.sale.messaging;
 
 import edu.noia.myoffice.common.domain.command.CommandPublisher;
-import edu.noia.myoffice.common.domain.event.EventPublisher;
+import edu.noia.myoffice.common.domain.event.EventPayload;
 import edu.noia.myoffice.sale.domain.exception.DomainExceptionHandler;
 import edu.noia.myoffice.sale.messaging.adapter.axon.CommandPublisherAdapter;
 import edu.noia.myoffice.sale.messaging.adapter.axon.EventPublisherAdapter;
@@ -11,11 +11,13 @@ import org.axonframework.eventhandling.EventBus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.function.Consumer;
+
 @Configuration
 public class SaleMessagingComponentConfig {
 
     @Bean
-    public EventPublisher eventPublisher(EventBus eventBus) {
+    public Consumer<EventPayload> eventPublisher(EventBus eventBus) {
         return new EventPublisherAdapter(eventBus);
     }
 
@@ -25,7 +27,7 @@ public class SaleMessagingComponentConfig {
     }
 
     @Bean
-    public SaleCommandCallback exceptionHandlerCallback(EventPublisher eventPublisher) {
+    public SaleCommandCallback exceptionHandlerCallback(Consumer<EventPayload> eventPublisher) {
         return new SaleCommandCallback(new DomainExceptionHandler(eventPublisher));
     }
 }

@@ -1,5 +1,6 @@
 package edu.noia.myoffice.sale.command.handler.axon;
 
+import edu.noia.myoffice.common.domain.event.BaseEvent;
 import edu.noia.myoffice.common.domain.event.EventPublisher;
 import edu.noia.myoffice.sale.domain.command.article.ReserveArticleCommand;
 import edu.noia.myoffice.sale.domain.event.article.SystemReservedArticleEventPayload;
@@ -18,7 +19,7 @@ public class AxonInventoryCommandHandler {
 
     @CommandHandler
     public void on(ReserveArticleCommand command) {
-        eventPublisher.accept(SystemReservedArticleEventPayload.of(
-                command.getCartId(), command.getArticleId(), command.getQuantity()));
+        eventPublisher.accept(BaseEvent.of(SystemReservedArticleEventPayload.of(
+                command.getCartId(), command.getArticleId(), command.getQuantity())));
     }
 }

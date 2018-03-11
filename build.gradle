@@ -20,7 +20,7 @@ allprojects {
 
 buildscript {
     ext {
-        myofficeCommonVersion = '0.0.7'
+        myofficeCommonVersion = '0.0.8'
         springBootVersion = '2.0.0.RC1'
         springHalBrowserVersion = '3.0.3.RELEASE'
         springfoxVersion = '2.8.0'
