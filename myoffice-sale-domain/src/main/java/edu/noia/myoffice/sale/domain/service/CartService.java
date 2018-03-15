@@ -1,6 +1,6 @@
 package edu.noia.myoffice.sale.domain.service;
 
-import edu.noia.myoffice.common.domain.event.EventPayload;
+import edu.noia.myoffice.common.domain.event.EventPublisher;
 import edu.noia.myoffice.common.util.holder.Holder;
 import edu.noia.myoffice.sale.domain.aggregate.Cart;
 import edu.noia.myoffice.sale.domain.command.cart.CloseCartCommand;
@@ -29,7 +29,7 @@ public class CartService {
     @NonNull
     CartRepository cartRepository;
     @NonNull
-    Consumer<EventPayload> eventPublisher;
+    EventPublisher eventPublisher;
 
     public void create(CreateCartCommand command) {
         Cart.of(command.getState(), eventPublisher).save(cartRepository);
@@ -38,7 +38,7 @@ public class CartService {
     public void addItem(AddItemToCartCommand command) {
         applyOnCart(command.getCartId(), cart -> {
             if (cart.getType() == CartType.LOG) {
-                eventPublisher.accept(ItemCreatedEventPayload.of(cart.getId(), command.getCartItem()));
+                eventPublisher.publish(ItemCreatedEventPayload.of(cart.getId(), command.getCartItem()));
             } else {
                 cart.addItem(command.getCartItem(), eventPublisher);
             }

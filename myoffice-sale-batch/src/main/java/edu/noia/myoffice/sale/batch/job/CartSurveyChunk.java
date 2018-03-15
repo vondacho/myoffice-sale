@@ -1,6 +1,5 @@
 package edu.noia.myoffice.sale.batch.job;
 
-import edu.noia.myoffice.common.domain.event.BaseEvent;
 import edu.noia.myoffice.common.domain.event.EventPublisher;
 import edu.noia.myoffice.sale.domain.event.cart.CartDeclaredAsRequestableEventPayload;
 import edu.noia.myoffice.sale.domain.vo.CartId;
@@ -28,6 +27,6 @@ public class CartSurveyChunk {
     }
 
     private void checkRequestableCart(CartId cartId) {
-        eventPublisher.accept(BaseEvent.of(CartDeclaredAsRequestableEventPayload.of(cartId)));
+        eventPublisher.publish(CartDeclaredAsRequestableEventPayload.of(cartId));
     }
 }

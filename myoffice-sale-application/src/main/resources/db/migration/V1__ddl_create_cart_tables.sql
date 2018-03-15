@@ -8,7 +8,7 @@ CREATE TABLE cart_state (
   order_id   VARCHAR(40)  NULL,
   notes      LONGTEXT     NULL,
   PRIMARY KEY (pk_id),
-  UNIQUE INDEX id_u (id ASC),
+  UNIQUE INDEX id_u (id),
   INDEX folder_id_i (folder_id)
 );
 
@@ -21,10 +21,8 @@ CREATE TABLE cart_items (
   unit       VARCHAR(10)    NOT NULL,
   quantity   DECIMAL(10, 2) NOT NULL,
   timestamp  TIMESTAMP      NULL,
-  UNIQUE INDEX id_u (id ASC),
-  INDEX cart_pk_fk_i (cart_pk ASC),
+  UNIQUE INDEX id_u (id),
+  INDEX cart_pk_fk_i (cart_pk),
   FOREIGN KEY (cart_pk)
   REFERENCES cart_state (pk_id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
 );

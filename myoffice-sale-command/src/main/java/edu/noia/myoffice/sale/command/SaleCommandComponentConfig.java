@@ -1,7 +1,6 @@
 package edu.noia.myoffice.sale.command;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.noia.myoffice.common.domain.event.EventPayload;
 import edu.noia.myoffice.common.domain.event.EventPublisher;
 import edu.noia.myoffice.common.serializer.CommonSerializers;
 import edu.noia.myoffice.sale.command.handler.axon.AxonCartServiceProxy;
@@ -16,14 +15,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.function.Consumer;
-
 @ComponentScan
 @Configuration
 public class SaleCommandComponentConfig {
 
     @Bean
-    public AxonCartServiceProxy cartCommandHandler(CartRepository cartRepository, Consumer<EventPayload> eventPublisher) {
+    public AxonCartServiceProxy cartCommandHandler(CartRepository cartRepository, EventPublisher eventPublisher) {
         return new AxonCartServiceProxy(cartRepository, eventPublisher);
     }
 

@@ -1,6 +1,6 @@
 package edu.noia.myoffice.sale.command.handler.axon;
 
-import edu.noia.myoffice.common.domain.event.EventPayload;
+import edu.noia.myoffice.common.domain.event.EventPublisher;
 import edu.noia.myoffice.sale.domain.command.cart.CloseCartCommand;
 import edu.noia.myoffice.sale.domain.command.cart.CreateCartCommand;
 import edu.noia.myoffice.sale.domain.command.cart.OrderCartCommand;
@@ -11,11 +11,9 @@ import edu.noia.myoffice.sale.domain.repository.CartRepository;
 import edu.noia.myoffice.sale.domain.service.CartService;
 import org.axonframework.commandhandling.CommandHandler;
 
-import java.util.function.Consumer;
-
 public class AxonCartServiceProxy extends CartService {
 
-    public AxonCartServiceProxy(CartRepository cartRepository, Consumer<EventPayload> eventPublisher) {
+    public AxonCartServiceProxy(CartRepository cartRepository, EventPublisher eventPublisher) {
         super(cartRepository, eventPublisher);
     }
 

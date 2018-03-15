@@ -2,7 +2,7 @@ package edu.noia.myoffice.sale.domain.aggregate;
 
 import edu.noia.myoffice.common.domain.entity.BaseEntity;
 import edu.noia.myoffice.common.domain.event.BaseEvent;
-import edu.noia.myoffice.common.domain.event.EventPayload;
+import edu.noia.myoffice.common.domain.event.EventPublisher;
 import edu.noia.myoffice.common.domain.vo.Amount;
 import edu.noia.myoffice.common.util.holder.Holder;
 import edu.noia.myoffice.common.util.validation.BeanValidator;
@@ -20,7 +20,6 @@ import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
 import java.time.Instant;
-import java.util.function.Consumer;
 
 import static edu.noia.myoffice.common.util.exception.ExceptionSuppliers.itemNotFound;
 import static edu.noia.myoffice.common.util.validation.Rule.condition;
@@ -35,9 +34,9 @@ public class Cart extends BaseEntity<Cart, CartId, CartState> {
         super(CartId.random(), state);
     }
 
-    public static Cart of(CartState state, Consumer<EventPayload> eventPublisher) {
+    public static Cart of(CartState state, EventPublisher eventPublisher) {
         Cart cart = new Cart(CartSample.of(validateBean(state)));
-        eventPublisher.accept(CartCreatedEventPayload.of(cart.getId(), CartSample.of(state)));
+        eventPublisher.publish(CartCreatedEventPayload.of(cart.getId(), CartSample.of(state)));
         return cart;
     }
 
@@ -76,35 +75,35 @@ public class Cart extends BaseEntity<Cart, CartId, CartState> {
         validateBean(state);
     }
 
-    public void addItem(CartItem cartItem, Consumer<EventPayload> eventPublisher) {
+    public void addItem(CartItem cartItem, EventPublisher eventPublisher) {
         condition(() -> state.getOrderId() == null, String.format("Cart {} has been ordered, no more add possible", getId()));
         validateBean(cartItem);
-        eventPublisher.accept(ItemAddedToCartEventPayload.of(getId(), cartItem));
+        eventPublisher.publish(ItemAddedToCartEventPayload.of(getId(), cartItem));
     }
 
-    public CartItem removeItem(CartItemId itemId, Consumer<EventPayload> eventPublisher) {
+    public CartItem removeItem(CartItemId itemId, EventPublisher eventPublisher) {
         condition(() -> state.getOrderId() == null, String.format("Cart {} has been ordered, no more add possible", getId()));
         return state.getItem(itemId).map(cartItem -> {
-            eventPublisher.accept(ItemRemovedFromCartEventPayload.of(getId(), itemId));
+            eventPublisher.publish(ItemRemovedFromCartEventPayload.of(getId(), itemId));
             return cartItem;
         }).orElseThrow(itemNotFound(CartItem.class, itemId, Cart.class, getId()));
     }
 
-    public void order(Consumer<EventPayload> eventPublisher) {
+    public void order(EventPublisher eventPublisher) {
         condition(() -> state.getOrderId() == null, String.format("Cart {} is already ordered", getId()));
         state.setOrderId(OrderId.random());
-        eventPublisher.accept(CartOrderedEventPayload.of(getId(),
+        eventPublisher.publish(CartOrderedEventPayload.of(getId(),
                 state.getType(),
                 state.getFolderId(),
                 state.getOrderId(),
                 getTotal()));
     }
 
-    public void close(InvoiceId invoiceId, Consumer<EventPayload> eventPublisher) {
+    public void close(InvoiceId invoiceId, EventPublisher eventPublisher) {
         condition(() -> state.getOrderId() != null, String.format("Cart {} has not been ordered, hence not closeable", getId()));
         condition(() -> state.getInvoiceId() == null, String.format("Cart {} is already closed", getId()));
         state.setInvoiceId(invoiceId);
-        eventPublisher.accept(CartInvoicedEventPayload.of(getId(), state.getInvoiceId()));
+        eventPublisher.publish(CartInvoicedEventPayload.of(getId(), state.getInvoiceId()));
     }
 
     public Holder<Cart> save(CartRepository repository) {
@@ -119,21 +118,21 @@ public class Cart extends BaseEntity<Cart, CartId, CartState> {
 
     protected void addItem(ItemAddedToCartEventPayload event, Instant timestamp) {
         state.add(event.getCartItem());
-        andEvent(BaseEvent.of(event, timestamp));
+        andEvent(event, timestamp);
     }
 
     protected void removeItem(ItemRemovedFromCartEventPayload event, Instant timestamp) {
         state.remove(event.getCartItemId());
-        andEvent(BaseEvent.of(event, timestamp));
+        andEvent(event, timestamp);
     }
 
     protected void order(CartOrderedEventPayload event, Instant timestamp) {
         state.setOrderId(event.getOrderId());
-        andEvent(BaseEvent.of(event, timestamp));
+        andEvent(event, timestamp);
     }
 
     protected void invoice(CartInvoicedEventPayload event, Instant timestamp) {
         state.setInvoiceId(event.getInvoiceId());
-        andEvent(BaseEvent.of(event, timestamp));
+        andEvent(event, timestamp);
     }
 }
