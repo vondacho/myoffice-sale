@@ -34,7 +34,7 @@ public class Cart extends BaseEntity<Cart, CartId, CartState> {
         super(CartId.random(), state);
     }
 
-    public static Cart of(CartState state, EventPublisher eventPublisher) {
+    public static Cart of(CartSpecification state, EventPublisher eventPublisher) {
         Cart cart = new Cart(CartSample.of(validateBean(state)));
         eventPublisher.publish(CartCreatedEventPayload.of(cart.getId(), CartSample.of(state)));
         return cart;

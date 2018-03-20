@@ -7,7 +7,7 @@ import java.time.Instant;
 
 public class CartEvent extends SaleEvent<Resource<CartId>> {
 
-    public CartEvent(Instant timestamp, Class cause, Resource<CartId> payload) {
-        super(timestamp, cause, payload);
+    public CartEvent(Instant timestamp, Class eventClass, Resource<CartId> payload) {
+        super(timestamp, eventClass, payload);
     }
 }

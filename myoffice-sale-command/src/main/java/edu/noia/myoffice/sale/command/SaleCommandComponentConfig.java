@@ -1,5 +1,6 @@
 package edu.noia.myoffice.sale.command;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.noia.myoffice.common.domain.event.EventPublisher;
 import edu.noia.myoffice.common.serializer.CommonSerializers;
@@ -31,10 +32,11 @@ public class SaleCommandComponentConfig {
 
     @Bean
     public Serializer serializer() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(CommonSerializers.getModule());
-        objectMapper.registerModule(SaleSerializers.getModule());
-        objectMapper.addMixIn(CartItem.class, CartItemMixin.class);
-        return new JacksonSerializer(objectMapper);
+        return new JacksonSerializer(
+                new ObjectMapper()
+                        .registerModule(CommonSerializers.getModule())
+                        .registerModule(SaleSerializers.getModule())
+                        .addMixIn(CartItem.class, CartItemMixin.class)
+                        .setSerializationInclusion(JsonInclude.Include.NON_EMPTY));
     }
 }

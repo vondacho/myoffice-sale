@@ -2,7 +2,7 @@
 allprojects {
     apply plugin: 'java'
     group 'edu.noia.myoffice'
-    version = '0.0.8'
+    version = '0.0.9'
     repositories {
         jcenter()
         maven { url "https://repo.spring.io/milestone" }
@@ -20,7 +20,7 @@ allprojects {
 
 buildscript {
     ext {
-        myofficeCommonVersion = '0.0.9'
+        myofficeCommonVersion = '0.0.10'
         springBootVersion = '2.0.0.RC1'
         springHalBrowserVersion = '3.0.3.RELEASE'
         springfoxVersion = '2.8.0'
@@ -28,7 +28,8 @@ buildscript {
         mokitoVersion = '2.8.47'
         jacksonVersion = '2.9.2'
         axonVersion = '3.1.2'
-        h2databaseVersion = '1.4.196'
+        h2DatabaseVersion = '1.4.196'
+        hsqlDatabaseVersion = '2.4.0'
         flywayVersion = '5.0.7'
     }
     repositories {

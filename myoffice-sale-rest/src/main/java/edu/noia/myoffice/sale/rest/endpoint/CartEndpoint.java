@@ -9,7 +9,7 @@ import edu.noia.myoffice.sale.domain.command.item.RemoveItemFromCartCommand;
 import edu.noia.myoffice.sale.domain.vo.CartId;
 import edu.noia.myoffice.sale.domain.vo.CartItem;
 import edu.noia.myoffice.sale.domain.vo.CartItemId;
-import edu.noia.myoffice.sale.domain.vo.CartSample;
+import edu.noia.myoffice.sale.domain.vo.CartSpecification;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +33,8 @@ public class CartEndpoint {
     CommandPublisher commandPublisher;
 
     @PostMapping
-    public ResponseEntity create(@RequestBody CartSample state) {
-        commandPublisher.accept(CreateCartCommand.of(state));
+    public ResponseEntity create(@RequestBody CartSpecification cartSpecification) {
+        commandPublisher.accept(CreateCartCommand.of(cartSpecification));
         return noContent().build();
     }
 

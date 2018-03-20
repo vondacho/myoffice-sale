@@ -6,12 +6,12 @@ dependencies {
     compile("edu.noia.myoffice:myoffice-sale-query-data:${version}")
     compile("edu.noia.myoffice:myoffice-sale-messaging:${version}")
     compile("edu.noia.myoffice:myoffice-sale-rest:${version}")
-    compile 'org.springframework.boot:spring-boot-starter-actuator'
+//    compile 'org.springframework.boot:spring-boot-starter-actuator'
     compile("org.springframework.data:spring-data-rest-hal-browser:${springHalBrowserVersion}")
     compile("io.springfox:springfox-swagger2:${springfoxVersion}")
     compile("io.springfox:springfox-data-rest:${springfoxVersion}")
     compile("io.springfox:springfox-swagger-ui:${springfoxVersion}")
-    compile("com.h2database:h2:${h2databaseVersion}")
+    compile("org.hsqldb:hsqldb:${hsqlDatabaseVersion}")
     compile("org.flywaydb:flyway-core:${flywayVersion}")
     compile 'mysql:mysql-connector-java'
 }

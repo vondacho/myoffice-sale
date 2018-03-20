@@ -9,6 +9,7 @@ import edu.noia.myoffice.sale.domain.command.item.DeposeItemIntoCartCommand;
 import edu.noia.myoffice.sale.domain.command.item.RemoveItemFromCartCommand;
 import edu.noia.myoffice.sale.domain.repository.CartRepository;
 import edu.noia.myoffice.sale.domain.service.CartService;
+import edu.noia.myoffice.sale.domain.vo.CartSample;
 import org.axonframework.commandhandling.CommandHandler;
 
 public class AxonCartServiceProxy extends CartService {
@@ -19,7 +20,7 @@ public class AxonCartServiceProxy extends CartService {
 
     @CommandHandler
     public void create(CreateCartCommand command) {
-        cartRepository.save(null, command.getState());
+        cartRepository.save(null, CartSample.of(command.getSpecification()));
     }
 
     @CommandHandler

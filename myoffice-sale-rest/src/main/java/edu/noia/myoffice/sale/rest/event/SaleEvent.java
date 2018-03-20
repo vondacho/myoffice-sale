@@ -17,7 +17,7 @@ public class SaleEvent<T> implements Event<T> {
     @NonNull
     Instant timestamp;
     @NonNull
-    Class cause;
+    Class eventClass;
     @NonNull
     T payload;
 }

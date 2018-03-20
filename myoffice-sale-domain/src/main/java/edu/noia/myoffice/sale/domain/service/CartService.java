@@ -32,7 +32,7 @@ public class CartService {
     EventPublisher eventPublisher;
 
     public void create(CreateCartCommand command) {
-        Cart.of(command.getState(), eventPublisher).save(cartRepository);
+        Cart.of(command.getSpecification(), eventPublisher).save(cartRepository);
     }
 
     public void addItem(AddItemToCartCommand command) {
