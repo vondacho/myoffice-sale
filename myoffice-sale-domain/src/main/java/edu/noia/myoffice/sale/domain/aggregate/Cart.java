@@ -34,9 +34,9 @@ public class Cart extends BaseEntity<Cart, CartId, CartState> {
         super(CartId.random(), state);
     }
 
-    public static Cart of(CartSpecification state, EventPublisher eventPublisher) {
-        Cart cart = new Cart(CartSample.of(validateBean(state)));
-        eventPublisher.publish(CartCreatedEventPayload.of(cart.getId(), CartSample.of(state)));
+    public static Cart create(CartSpecification specification, EventPublisher eventPublisher) {
+        Cart cart = new Cart(CartSample.from(validateBean(specification)));
+        eventPublisher.publish(CartCreatedEventPayload.of(cart.getId(), specification));
         return cart;
     }
 
@@ -50,7 +50,7 @@ public class Cart extends BaseEntity<Cart, CartId, CartState> {
 
     @Override
     protected CartState cloneState() {
-        return CartSample.of(state);
+        return CartSample.from(state);
     }
 
     public Amount getTotal() {
@@ -112,7 +112,7 @@ public class Cart extends BaseEntity<Cart, CartId, CartState> {
 
     protected void create(CartCreatedEventPayload event, Instant timestamp) {
         setId(event.getCartId());
-        setState(CartSample.of(event.getCartState()));
+        setState(CartSample.from(event.getCartSpecification()));
         andEvent(BaseEvent.of(event, timestamp));
     }
 

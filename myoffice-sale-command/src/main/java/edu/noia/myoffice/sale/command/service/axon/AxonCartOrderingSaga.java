@@ -54,7 +54,7 @@ public class AxonCartOrderingSaga extends CartOrderingSaga {
     }
 
     /**
-     * Start of saga
+     * Start create saga
      * @param event
      */
     @StartSaga
@@ -64,7 +64,7 @@ public class AxonCartOrderingSaga extends CartOrderingSaga {
     }
 
     /**
-     * Continuation of saga
+     * Continuation create saga
      * @param event
      */
     @SagaEventHandler(associationProperty = "cartId")
@@ -73,7 +73,7 @@ public class AxonCartOrderingSaga extends CartOrderingSaga {
     }
 
     /**
-     * Continuation or end of saga
+     * Continuation or end create saga
      * @param event
      */
     @SagaEventHandler(associationProperty = "cartId")
@@ -85,7 +85,7 @@ public class AxonCartOrderingSaga extends CartOrderingSaga {
     }
 
     /**
-     * Continuation or end of saga
+     * Continuation or end create saga
      * @param event
      */
     @SagaEventHandler(associationProperty = "cartId")
@@ -106,7 +106,7 @@ public class AxonCartOrderingSaga extends CartOrderingSaga {
     }
 
     /**
-     * End of saga
+     * End create saga
      * @param event
      */
     @EndSaga

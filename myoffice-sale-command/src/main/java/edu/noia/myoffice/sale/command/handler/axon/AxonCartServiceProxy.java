@@ -20,7 +20,7 @@ public class AxonCartServiceProxy extends CartService {
 
     @CommandHandler
     public void create(CreateCartCommand command) {
-        cartRepository.save(null, CartSample.of(command.getSpecification()));
+        cartRepository.save(null, CartSample.from(command.getSpecification()));
     }
 
     @CommandHandler

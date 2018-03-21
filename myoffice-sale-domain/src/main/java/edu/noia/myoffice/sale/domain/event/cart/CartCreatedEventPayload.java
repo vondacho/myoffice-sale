@@ -1,7 +1,7 @@
 package edu.noia.myoffice.sale.domain.event.cart;
 
 import edu.noia.myoffice.sale.domain.vo.CartId;
-import edu.noia.myoffice.sale.domain.vo.CartSample;
+import edu.noia.myoffice.sale.domain.vo.CartSpecification;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -14,5 +14,5 @@ public class CartCreatedEventPayload implements CartEventPayload {
     @NonNull
     CartId cartId;
     @NonNull
-    CartSample cartState;
+    CartSpecification cartSpecification;
 }

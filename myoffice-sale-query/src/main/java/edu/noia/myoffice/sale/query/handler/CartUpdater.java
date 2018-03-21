@@ -5,6 +5,7 @@ import edu.noia.myoffice.sale.domain.event.cart.CartInvoicedEventPayload;
 import edu.noia.myoffice.sale.domain.event.cart.CartOrderedEventPayload;
 import edu.noia.myoffice.sale.domain.event.item.ItemAddedToCartEventPayload;
 import edu.noia.myoffice.sale.domain.event.item.ItemRemovedFromCartEventPayload;
+import edu.noia.myoffice.sale.domain.vo.CartSample;
 import edu.noia.myoffice.sale.query.repository.CartStateRepository;
 import lombok.AccessLevel;
 import lombok.NonNull;
@@ -19,7 +20,7 @@ public class CartUpdater {
     CartStateRepository repository;
 
     public void created(CartCreatedEventPayload event) {
-        repository.save(event.getCartId(), event.getCartState());
+        repository.save(event.getCartId(), CartSample.from(event.getCartSpecification()));
     }
 
     public void itemAdded(ItemAddedToCartEventPayload event) {

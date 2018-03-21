@@ -6,6 +6,7 @@ import edu.noia.myoffice.sale.domain.aggregate.Cart;
 import edu.noia.myoffice.sale.domain.aggregate.CartState;
 import edu.noia.myoffice.sale.domain.repository.CartRepository;
 import edu.noia.myoffice.sale.domain.vo.CartId;
+import edu.noia.myoffice.sale.domain.vo.CartSpecification;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +37,7 @@ public class AxonCartRepository implements CartRepository {
     @Override
     public Holder<Cart> save(CartId id, CartState state) {
         try {
-            return new CartHolder(repository.newInstance(() -> AxonCart.of(state)));
+            return new CartHolder(repository.newInstance(() -> AxonCart.create(CartSpecification.from(state))));
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }

@@ -1,5 +1,6 @@
 package edu.noia.myoffice.sale.domain.vo;
 
+import edu.noia.myoffice.sale.domain.aggregate.CartState;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,4 +19,13 @@ public class CartSpecification {
     CartType type;
     String title;
     String notes;
+
+    public static CartSpecification from(CartState state) {
+        CartSpecification specification = new CartSpecification();
+        specification.folderId = state.getFolderId();
+        specification.type = state.getType();
+        specification.notes = state.getNotes();
+        specification.title = state.getTitle();
+        return specification;
+    }
 }

@@ -32,13 +32,13 @@ public class CartSample implements CartState {
     @Setter(value = AccessLevel.PRIVATE)
     Map<CartItemId, CartItem> items;
 
-    public static CartSample of(CartSpecification specification) {
+    public static CartSample from(CartSpecification specification) {
         return CartSample.of(specification.getFolderId(), specification.getType())
                 .setTitle(specification.getTitle())
                 .setNotes(specification.getNotes());
     }
 
-    public static CartSample of(CartState state) {
+    public static CartSample from(CartState state) {
         return CartSample.of(state.getFolderId(), state.getType())
                 .setTitle(state.getTitle())
                 .setNotes(state.getNotes())

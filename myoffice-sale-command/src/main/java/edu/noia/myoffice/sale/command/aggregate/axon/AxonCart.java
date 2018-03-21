@@ -36,10 +36,9 @@ public class AxonCart extends Cart {
         super(cartState);
     }
 
-    public static AxonCart of(CartState state) {
-        validateBean(state);
-        AxonCart cart = new AxonCart(CartSample.of(state));
-        AggregateLifecycle.apply(CartCreatedEventPayload.of(cart.getId(), CartSample.of(state)));
+    public static AxonCart create(CartSpecification specification) {
+        AxonCart cart = new AxonCart(CartSample.from(validateBean(specification)));
+        AggregateLifecycle.apply(CartCreatedEventPayload.of(cart.getId(), specification));
         return cart;
     }
 
