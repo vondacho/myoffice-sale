@@ -1,12 +1,26 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.0.RELEASE'
+    }
+    repositories {
+        jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5'
+        classpath 'io.franzbecker:gradle-lombok:1.10'
+    }
+}
 
 allprojects {
     apply plugin: 'java'
     group 'edu.noia.myoffice'
-    version = '0.0.9'
+    version = '0.0.10'
     repositories {
         jcenter()
-        maven { url "https://repo.spring.io/milestone" }
         mavenLocal()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
         maven {
             name 'mavenRemote'
             url myMavenRepoReadUrl
@@ -15,35 +29,6 @@ allprojects {
                 password myMavenRepoReadPassword
             }
         }
-    }
-}
-
-buildscript {
-    ext {
-        myofficeCommonVersion = '0.0.10'
-        springBootVersion = '2.0.0.RC1'
-        springHalBrowserVersion = '3.0.3.RELEASE'
-        springfoxVersion = '2.8.0'
-        lombokVersion = '1.16.18'
-        mokitoVersion = '2.8.47'
-        jacksonVersion = '2.9.2'
-        axonVersion = '3.1.2'
-        h2DatabaseVersion = '1.4.196'
-        hsqlDatabaseVersion = '2.4.0'
-        flywayVersion = '5.0.7'
-    }
-    repositories {
-        mavenCentral()
-        maven { url "https://repo.spring.io/milestone" }
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-    }
-    dependencies {
-        classpath 'io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE'
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5'
-        classpath 'io.franzbecker:gradle-lombok:1.10'
     }
 }
 
@@ -61,6 +46,19 @@ subprojects {
     apply plugin: 'org.sonarqube'
     apply plugin: 'io.franzbecker.gradle-lombok'
     sourceCompatibility = 1.8
+    ext {
+        myofficeCommonVersion = '0.0.10'
+        springBootAdminVersion = '2.0.0-SNAPSHOT'
+        springHalBrowserVersion = '3.0.3.RELEASE'
+        springfoxVersion = '2.8.0'
+        lombokVersion = '1.16.18'
+        mokitoVersion = '2.8.47'
+        jacksonVersion = '2.9.2'
+        axonVersion = '3.1.2'
+        h2DatabaseVersion = '1.4.196'
+        hsqlDatabaseVersion = '2.4.0'
+        flywayVersion = '5.0.7'
+    }
     dependencyManagement {
         imports {
             mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
