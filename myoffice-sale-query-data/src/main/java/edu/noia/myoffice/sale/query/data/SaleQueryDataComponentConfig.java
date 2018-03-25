@@ -9,7 +9,6 @@ import edu.noia.myoffice.sale.query.repository.CartStateRepository;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.envers.repository.support.EnversRevisionRepositoryFactoryBean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.core.support.EntityLookupSupport;
@@ -23,7 +22,7 @@ import java.io.Serializable;
 import java.util.Optional;
 import java.util.UUID;
 
-@EnableJpaRepositories(repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class)
+@EnableJpaRepositories
 @EntityScan
 @Configuration
 public class SaleQueryDataComponentConfig {

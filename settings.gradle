@@ -8,5 +8,6 @@ include 'myoffice-sale-domain',
         'myoffice-sale-rest',
         'myoffice-sale-query-data',
         'myoffice-sale-command-data',
-        'myoffice-sale-application'
+        'myoffice-sale-application',
+        'myoffice-sale-ui'
 

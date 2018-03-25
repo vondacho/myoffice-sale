@@ -1,7 +1,7 @@
 package edu.noia.myoffice.sale.domain.vo;
 
-import edu.noia.myoffice.common.domain.entity.EntityState;
 import edu.noia.myoffice.sale.domain.aggregate.CartState;
+import edu.noia.myoffice.sale.domain.aggregate.MutableCartState;
 import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
@@ -9,13 +9,12 @@ import lombok.experimental.FieldDefaults;
 import java.util.*;
 import java.util.stream.Stream;
 
-@ToString(exclude = {"items"})
 @Accessors(chain = true)
 @Getter
 @RequiredArgsConstructor(staticName = "of", access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CartSample implements CartState {
+public class CartSample implements MutableCartState {
 
     @NonNull
     FolderId folderId;
@@ -59,7 +58,6 @@ public class CartSample implements CartState {
         return Optional.ofNullable(items).map(i -> i.get(itemId));
     }
 
-    @Override
     public CartSample add(CartItem... cartItems) {
         if (items == null) {
             items = new HashMap<>();
@@ -68,18 +66,7 @@ public class CartSample implements CartState {
         return this;
     }
 
-    @Override
     public Optional<CartItem> remove(CartItemId itemId) {
         return items != null ? Optional.ofNullable(items.remove(itemId)) : Optional.empty();
-    }
-
-    @Override
-    public CartState modify(EntityState modifier) {
-        return this;
-    }
-
-    @Override
-    public CartState patch(EntityState modifier) {
-        return this;
     }
 }

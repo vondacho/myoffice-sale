@@ -6,6 +6,7 @@ import edu.noia.myoffice.sale.domain.command.cart.CreateCartCommand;
 import edu.noia.myoffice.sale.domain.command.cart.OrderCartCommand;
 import edu.noia.myoffice.sale.domain.command.item.AddItemToCartCommand;
 import edu.noia.myoffice.sale.domain.command.item.RemoveItemFromCartCommand;
+import edu.noia.myoffice.sale.domain.service.CartService;
 import edu.noia.myoffice.sale.domain.vo.CartId;
 import edu.noia.myoffice.sale.domain.vo.CartItem;
 import edu.noia.myoffice.sale.domain.vo.CartItemId;
@@ -31,6 +32,8 @@ public class CartEndpoint {
 
     @NonNull
     CommandPublisher commandPublisher;
+    @NonNull
+    CartService cartService;
 
     @PostMapping
     public ResponseEntity create(@RequestBody CartSpecification cartSpecification) {
@@ -65,10 +68,15 @@ public class CartEndpoint {
         return notFound().build();
     }
 
+    @GetMapping("{id}/audit")
+    public ResponseEntity getAudit(@PathVariable("id") CartId cartId) {
+        return noContent().build();
+    }
+
     @InitBinder
     public void dataBinding(WebDataBinder binder) {
         binder.registerCustomEditor(CartId.class,
-                new IdentifiantPropertyEditorSupport<>(s-> CartId.of(UUID.fromString(s))));
+                new IdentifiantPropertyEditorSupport<>(s -> CartId.of(UUID.fromString(s))));
         binder.registerCustomEditor(CartItemId.class,
                 new IdentifiantPropertyEditorSupport<>(s -> CartItemId.of(UUID.fromString(s))));
     }

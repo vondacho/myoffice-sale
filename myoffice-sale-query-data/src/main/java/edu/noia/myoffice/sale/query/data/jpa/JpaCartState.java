@@ -3,13 +3,13 @@ package edu.noia.myoffice.sale.query.data.jpa;
 import edu.noia.myoffice.common.data.jpa.JpaBaseEntity;
 import edu.noia.myoffice.common.domain.entity.EntityState;
 import edu.noia.myoffice.sale.domain.aggregate.CartState;
+import edu.noia.myoffice.sale.domain.aggregate.MutableCartState;
 import edu.noia.myoffice.sale.domain.vo.*;
 import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
-import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,8 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-@Table(name = "cart_state")
-@Audited
+@Table(name = "cart")
 @Entity
 @EqualsAndHashCode(of = "id", callSuper = false)
 @Accessors(chain=true)
@@ -26,7 +25,7 @@ import java.util.Optional;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class JpaCartState extends JpaBaseEntity implements CartState {
+public class JpaCartState extends JpaBaseEntity implements MutableCartState {
 
     CartId id;
     FolderId folderId;
@@ -67,7 +66,7 @@ public class JpaCartState extends JpaBaseEntity implements CartState {
     }
 
     @Override
-    public CartState add(CartItem... cartItems) {
+    public MutableCartState add(CartItem... cartItems) {
         items.addAll(Arrays.asList(cartItems));
         return this;
     }

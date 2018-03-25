@@ -28,10 +28,10 @@ import static edu.noia.myoffice.common.util.validation.Rule.condition;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @FieldDefaults(level = AccessLevel.PROTECTED)
-public class Cart extends BaseEntity<Cart, CartId, CartState> {
+public class Cart extends BaseEntity<Cart, CartId, CartSample> {
 
     protected Cart(CartState state) {
-        super(CartId.random(), state);
+        super(CartId.random(), state instanceof CartSample ? (CartSample) state : CartSample.from(state));
     }
 
     public static Cart create(CartSpecification specification, EventPublisher eventPublisher) {
@@ -49,7 +49,7 @@ public class Cart extends BaseEntity<Cart, CartId, CartState> {
     }
 
     @Override
-    protected CartState cloneState() {
+    protected CartSample cloneState() {
         return CartSample.from(state);
     }
 
@@ -61,17 +61,7 @@ public class Cart extends BaseEntity<Cart, CartId, CartState> {
     }
 
     @Override
-    public Cart modify(CartState modifier) {
-        return this;
-    }
-
-    @Override
-    public Cart patch(CartState modifier) {
-        return this;
-    }
-
-    @Override
-    public void validate(CartState state) {
+    public void validate(CartSample state) {
         validateBean(state);
     }
 

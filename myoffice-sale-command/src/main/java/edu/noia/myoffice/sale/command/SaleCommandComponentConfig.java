@@ -15,6 +15,7 @@ import org.axonframework.serialization.json.JacksonSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @ComponentScan
 @Configuration
@@ -30,6 +31,7 @@ public class SaleCommandComponentConfig {
         return new AxonInventoryCommandHandler(eventPublisher);
     }
 
+    @Primary
     @Bean
     public Serializer serializer() {
         return new JacksonSerializer(

@@ -32,8 +32,8 @@ public class AxonCart extends Cart {
     @AggregateIdentifier
     CartId aggregateId;
 
-    private AxonCart(CartState cartState) {
-        super(cartState);
+    private AxonCart(CartState state) {
+        super(state);
     }
 
     public static AxonCart create(CartSpecification specification) {

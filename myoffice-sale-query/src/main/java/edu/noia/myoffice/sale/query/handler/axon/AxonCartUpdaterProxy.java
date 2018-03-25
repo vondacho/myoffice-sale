@@ -15,12 +15,12 @@ public class AxonCartUpdaterProxy extends CartUpdater {
         super(repository);
     }
 
-    @EventHandler(payloadType = CartCreatedEventPayload.class)
+    @EventHandler
     public void created(CartCreatedEventPayload event) {
         super.created(event);
     }
 
-    @EventHandler(payloadType = ItemAddedToCartEventPayload.class)
+    @EventHandler
     public void itemAdded(ItemAddedToCartEventPayload event) {
         super.itemAdded(event);
     }

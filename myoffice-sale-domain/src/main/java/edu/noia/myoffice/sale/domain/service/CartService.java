@@ -61,11 +61,11 @@ public class CartService {
         applyOnCart(command.getCartId(), cart -> cart.close(command.getInvoiceId(), eventPublisher));
     }
 
-    private void applyOnCart(CartId cartId, Consumer<Cart> action) {
+    public void applyOnCart(CartId cartId, Consumer<Cart> action) {
         findCart(cartId).execute(action::accept);
     }
 
-    private Holder<Cart> findCart(CartId cartId) {
+    public Holder<Cart> findCart(CartId cartId) {
         return cartRepository.findOne(cartId).orElseThrow(notFound(Cart.class, cartId));
     }
 }

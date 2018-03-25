@@ -1,6 +1,7 @@
 package edu.noia.myoffice.sale.query.data.adapter;
 
 import edu.noia.myoffice.sale.domain.aggregate.CartState;
+import edu.noia.myoffice.sale.domain.aggregate.MutableCartState;
 import edu.noia.myoffice.sale.domain.vo.CartId;
 import edu.noia.myoffice.sale.domain.vo.FolderId;
 import edu.noia.myoffice.sale.query.data.jpa.JpaCartState;
@@ -24,14 +25,14 @@ public class CartStateRepositoryAdapter implements CartStateRepository {
     JpaCartStateRepository repository;
 
     @Override
-    public Optional<CartState> findById(CartId id) {
+    public Optional<MutableCartState> findById(CartId id) {
         return repository
                 .findById(id)
                 .map(this::toCart);
     }
 
     @Override
-    public List<CartState> findByFolderId(FolderId folderId) {
+    public List<MutableCartState> findByFolderId(FolderId folderId) {
         return repository
                 .findByFolderId(folderId)
                 .stream()
@@ -40,11 +41,11 @@ public class CartStateRepositoryAdapter implements CartStateRepository {
     }
 
     @Override
-    public CartState save(CartId id, CartState state) {
+    public MutableCartState save(CartId id, CartState state) {
         return repository.save(JpaCartState.of(id, state));
     }
 
-    private CartState toCart(JpaCartState state) {
+    private MutableCartState toCart(JpaCartState state) {
         return state;
     }
 }

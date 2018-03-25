@@ -1,6 +1,7 @@
 package edu.noia.myoffice.sale.query.repository;
 
 import edu.noia.myoffice.sale.domain.aggregate.CartState;
+import edu.noia.myoffice.sale.domain.aggregate.MutableCartState;
 import edu.noia.myoffice.sale.domain.vo.CartId;
 import edu.noia.myoffice.sale.domain.vo.FolderId;
 
@@ -9,9 +10,9 @@ import java.util.Optional;
 
 public interface CartStateRepository {
 
-    Optional<CartState> findById(CartId id);
+    Optional<MutableCartState> findById(CartId id);
 
-    List<CartState> findByFolderId(FolderId folderId);
+    List<MutableCartState> findByFolderId(FolderId folderId);
 
-    CartState save(CartId id, CartState state);
+    MutableCartState save(CartId id, CartState state);
 }

@@ -28,15 +28,11 @@ public interface CartState extends EntityState {
         return Optional.empty();
     }
 
-    CartState add(CartItem... item);
+    default OrderId getOrderId() {
+        return null;
+    }
 
-    Optional<CartItem> remove(CartItemId itemId);
-
-    OrderId getOrderId();
-
-    CartState setOrderId(OrderId orderId);
-
-    InvoiceId getInvoiceId();
-
-    CartState setInvoiceId(InvoiceId invoiceId);
+    default InvoiceId getInvoiceId() {
+        return null;
+    }
 }
