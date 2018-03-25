@@ -3,6 +3,7 @@ package edu.noia.myoffice.sale.query.data.jpa;
 import edu.noia.myoffice.sale.domain.vo.CartId;
 import edu.noia.myoffice.sale.domain.vo.FolderId;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.history.RevisionRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 
@@ -10,7 +11,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RepositoryRestResource(path = "carts", collectionResourceRel = "carts", itemResourceRel = "cart")
-public interface JpaCartStateRepository extends CrudRepository<JpaCartState, Long> {
+public interface JpaCartStateRepository
+        extends CrudRepository<JpaCartState, Long>, RevisionRepository<JpaCartState, Long, Integer> {
 
     @RestResource(path = "byId", rel = "findById")
     Optional<JpaCartState> findById(CartId id);

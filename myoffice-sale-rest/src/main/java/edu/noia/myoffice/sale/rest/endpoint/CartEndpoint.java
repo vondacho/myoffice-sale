@@ -68,11 +68,6 @@ public class CartEndpoint {
         return notFound().build();
     }
 
-    @GetMapping("{id}/audit")
-    public ResponseEntity getAudit(@PathVariable("id") CartId cartId) {
-        return noContent().build();
-    }
-
     @InitBinder
     public void dataBinding(WebDataBinder binder) {
         binder.registerCustomEditor(CartId.class,

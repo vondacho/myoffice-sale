@@ -1,4 +1,4 @@
-CREATE TABLE cart_state (
+CREATE TABLE cart (
   pk_id      BIGINT(10)   NOT NULL AUTO_INCREMENT,
   id         VARCHAR(40)  NOT NULL,
   folder_id  VARCHAR(40)  NOT NULL,

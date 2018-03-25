@@ -1,7 +1,6 @@
 package edu.noia.myoffice.sale.domain.vo;
 
 import edu.noia.myoffice.sale.domain.aggregate.CartState;
-import edu.noia.myoffice.sale.domain.aggregate.MutableCartState;
 import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
@@ -14,7 +13,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor(staticName = "of", access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CartSample implements MutableCartState {
+public class CartSample implements CartState {
 
     @NonNull
     FolderId folderId;

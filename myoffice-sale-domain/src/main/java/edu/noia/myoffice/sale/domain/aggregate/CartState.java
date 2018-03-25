@@ -35,4 +35,12 @@ public interface CartState extends EntityState {
     default InvoiceId getInvoiceId() {
         return null;
     }
+
+    CartState add(CartItem... cartItems);
+
+    Optional<CartItem> remove(CartItemId itemId);
+
+    CartState setOrderId(OrderId orderId);
+
+    CartState setInvoiceId(InvoiceId invoiceId);
 }

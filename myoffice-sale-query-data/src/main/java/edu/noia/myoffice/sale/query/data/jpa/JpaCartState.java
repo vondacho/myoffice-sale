@@ -1,9 +1,7 @@
 package edu.noia.myoffice.sale.query.data.jpa;
 
 import edu.noia.myoffice.common.data.jpa.JpaBaseEntity;
-import edu.noia.myoffice.common.domain.entity.EntityState;
 import edu.noia.myoffice.sale.domain.aggregate.CartState;
-import edu.noia.myoffice.sale.domain.aggregate.MutableCartState;
 import edu.noia.myoffice.sale.domain.vo.*;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -25,7 +23,7 @@ import java.util.Optional;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class JpaCartState extends JpaBaseEntity implements MutableCartState {
+public class JpaCartState extends JpaBaseEntity implements CartState {
 
     CartId id;
     FolderId folderId;
@@ -66,7 +64,7 @@ public class JpaCartState extends JpaBaseEntity implements MutableCartState {
     }
 
     @Override
-    public MutableCartState add(CartItem... cartItems) {
+    public CartState add(CartItem... cartItems) {
         items.addAll(Arrays.asList(cartItems));
         return this;
     }
@@ -78,15 +76,5 @@ public class JpaCartState extends JpaBaseEntity implements MutableCartState {
                     items.remove(item);
                     return item;
                 });
-    }
-
-    @Override
-    public CartState modify(EntityState modifier) {
-        return this;
-    }
-
-    @Override
-    public CartState patch(EntityState modifier) {
-        return this;
     }
 }
