@@ -4,13 +4,13 @@
 
 This project implements the microservice which supports the **Sale** domain of the myOffice application.
 
-## myoffice-sale-application
+## myoffice-sale-domain
 
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application&metric=alert_status)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application&metric=code_smells)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application&metric=coverage)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application&metric=ncloc)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain&metric=alert_status)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain&metric=code_smells)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain&metric=coverage)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain&metric=ncloc)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain)
 
 This module aims to provide ...
 
@@ -21,16 +21,6 @@ This module aims to provide ...
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-rest&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-rest)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-rest&metric=coverage)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-rest)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-rest&metric=ncloc)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-rest)
-
-This module aims to provide ...
-
-## myoffice-sale-domain
-
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain&metric=alert_status)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain&metric=code_smells)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain&metric=coverage)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain&metric=ncloc)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-domain)
 
 ## myoffice-sale-command
 
@@ -97,5 +87,15 @@ This module aims to provide ...
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-batch&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-batch)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-batch&metric=coverage)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-batch)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-batch&metric=ncloc)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-batch)
+
+This module aims to provide ...
+
+## myoffice-sale-application
+
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application&metric=alert_status)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application&metric=code_smells)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application&metric=coverage)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application&metric=ncloc)](https://sonarcloud.io/dashboard?id=edu.noia.myoffice%3Amyoffice-sale%3Amyoffice-sale-application)
 
 This module aims to provide ...
