@@ -1,6 +1,10 @@
 package edu.noia.myoffice.sale.rest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import edu.noia.myoffice.common.domain.vo.Quantity;
+import edu.noia.myoffice.common.domain.vo.Rate;
+import edu.noia.myoffice.common.mixin.QuantityMixin;
+import edu.noia.myoffice.common.mixin.RateMixin;
 import edu.noia.myoffice.common.serializer.CommonSerializers;
 import edu.noia.myoffice.sale.common.mixin.CartItemMixin;
 import edu.noia.myoffice.sale.common.serializer.SaleSerializers;
@@ -20,6 +24,8 @@ public class SaleRestComponentConfig {
         return new Jackson2ObjectMapperBuilder()
                 .serializationInclusion(JsonInclude.Include.NON_EMPTY)
                 .mixIn(CartItem.class, CartItemMixin.class)
+                .mixIn(Quantity.class, QuantityMixin.class)
+                .mixIn(Rate.class, RateMixin.class)
                 .modules(CommonSerializers.getModule(), SaleSerializers.getModule());
     }
 

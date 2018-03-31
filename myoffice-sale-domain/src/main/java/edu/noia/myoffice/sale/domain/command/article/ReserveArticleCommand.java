@@ -1,5 +1,6 @@
 package edu.noia.myoffice.sale.domain.command.article;
 
+import edu.noia.myoffice.common.domain.vo.Quantity;
 import edu.noia.myoffice.sale.domain.command.cart.CartCommand;
 import edu.noia.myoffice.sale.domain.vo.ArticleId;
 import edu.noia.myoffice.sale.domain.vo.CartId;
@@ -18,5 +19,5 @@ public class ReserveArticleCommand implements CartCommand, ArticleCommand {
     @NonNull
     ArticleId articleId;
     @NonNull
-    Long quantity;
+    Quantity quantity;
 }

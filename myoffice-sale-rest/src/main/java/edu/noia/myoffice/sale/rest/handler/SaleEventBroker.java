@@ -24,7 +24,8 @@ public class SaleEventBroker extends DefaultBroker<SaleEvent, UUID> {
     public void onSuccess(CartEventPayload event, Instant timestamp) {
         toCartEvent(timestamp)
                 .apply(event)
-                .flatMap(addHateoas(hateoasProcessor)).ifPresent(this::accept);
+                .flatMap(addHateoas(hateoasProcessor))
+                .ifPresent(this::accept);
     }
 
     public void onFailure(ProblemEventPayload event, Instant timestamp) {

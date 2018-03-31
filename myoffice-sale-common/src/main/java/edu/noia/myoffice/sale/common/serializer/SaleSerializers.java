@@ -4,19 +4,15 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import edu.noia.myoffice.common.serializer.CommonSerializers;
 import edu.noia.myoffice.sale.domain.vo.ArticleId;
 import edu.noia.myoffice.sale.domain.vo.CartId;
+import edu.noia.myoffice.sale.domain.vo.CartItemId;
 import edu.noia.myoffice.sale.domain.vo.FolderId;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
-
-import static edu.noia.myoffice.common.util.converter.Converters.toLocalDateTimeUTC;
 
 public class SaleSerializers {
 
@@ -28,10 +24,11 @@ public class SaleSerializers {
         module.addDeserializer(CartId.class, new CartIdDeserializer());
         module.addDeserializer(FolderId.class, new FolderIdDeserializer());
         module.addDeserializer(ArticleId.class, new ArticleIdDeserializer());
+        module.addDeserializer(CartItemId.class, new CartItemIdDeserializer());
         module.addSerializer(CartId.class, new CartIdSerializer());
         module.addSerializer(FolderId.class, new FolderIdSerializer());
         module.addSerializer(ArticleId.class, new ArticleIdSerializer());
-        module.addSerializer(Instant.class, new InstantSerializer());
+        module.addSerializer(CartItemId.class, new CartItemIdSerializer());
         return module;
     }
 
@@ -51,6 +48,26 @@ public class SaleSerializers {
                     .filter(StringUtils::hasText)
                     .map(UUID::fromString)
                     .map(CartId::of)
+                    .orElse(null);
+        }
+    }
+
+    public static class CartItemIdSerializer extends JsonSerializer<CartItemId> {
+        @Override
+        public void serialize(CartItemId cartItemId, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+            if (cartItemId != null) {
+                gen.writeString(cartItemId.getId().toString());
+            }
+        }
+    }
+
+    public static class CartItemIdDeserializer extends JsonDeserializer<CartItemId> {
+        @Override
+        public CartItemId deserialize(JsonParser parser, DeserializationContext ctx) throws IOException {
+            return Optional.ofNullable(parser.readValueAs(String.class))
+                    .filter(StringUtils::hasText)
+                    .map(UUID::fromString)
+                    .map(CartItemId::of)
                     .orElse(null);
         }
     }
@@ -92,16 +109,6 @@ public class SaleSerializers {
                     .map(UUID::fromString)
                     .map(ArticleId::of)
                     .orElse(null);
-        }
-    }
-
-    public static class InstantSerializer extends JsonSerializer<Instant> {
-
-        final JsonSerializer<LocalDateTime> localDateTimeSerializer = new CommonSerializers.LocalDateTimeSerializer();
-
-        @Override
-        public void serialize(Instant instant, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-            localDateTimeSerializer.serialize(toLocalDateTimeUTC(instant), gen, serializers);
         }
     }
 }

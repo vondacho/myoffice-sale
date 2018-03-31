@@ -3,6 +3,10 @@ package edu.noia.myoffice.sale.command;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.noia.myoffice.common.domain.event.EventPublisher;
+import edu.noia.myoffice.common.domain.vo.Quantity;
+import edu.noia.myoffice.common.domain.vo.Rate;
+import edu.noia.myoffice.common.mixin.QuantityMixin;
+import edu.noia.myoffice.common.mixin.RateMixin;
 import edu.noia.myoffice.common.serializer.CommonSerializers;
 import edu.noia.myoffice.sale.command.handler.axon.AxonCartServiceProxy;
 import edu.noia.myoffice.sale.command.handler.axon.AxonInventoryCommandHandler;
@@ -39,6 +43,8 @@ public class SaleCommandComponentConfig {
                         .registerModule(CommonSerializers.getModule())
                         .registerModule(SaleSerializers.getModule())
                         .addMixIn(CartItem.class, CartItemMixin.class)
+                        .addMixIn(Quantity.class, QuantityMixin.class)
+                        .addMixIn(Rate.class, RateMixin.class)
                         .setSerializationInclusion(JsonInclude.Include.NON_EMPTY));
     }
 }

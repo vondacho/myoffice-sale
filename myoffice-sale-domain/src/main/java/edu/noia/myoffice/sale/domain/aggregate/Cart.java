@@ -2,7 +2,7 @@ package edu.noia.myoffice.sale.domain.aggregate;
 
 import edu.noia.myoffice.common.domain.entity.BaseEntity;
 import edu.noia.myoffice.common.domain.event.BaseEvent;
-import edu.noia.myoffice.common.domain.event.EventPublisher;
+import edu.noia.myoffice.common.domain.event.EventPayload;
 import edu.noia.myoffice.common.domain.vo.Amount;
 import edu.noia.myoffice.common.util.holder.Holder;
 import edu.noia.myoffice.common.util.validation.BeanValidator;
@@ -16,27 +16,26 @@ import edu.noia.myoffice.sale.domain.vo.*;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
 import java.time.Instant;
+import java.util.function.Consumer;
 
 import static edu.noia.myoffice.common.util.exception.ExceptionSuppliers.itemNotFound;
 import static edu.noia.myoffice.common.util.validation.Rule.condition;
 
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @FieldDefaults(level = AccessLevel.PROTECTED)
-public class Cart extends BaseEntity<Cart, CartId, CartSample> {
+public class Cart extends BaseEntity<Cart, CartId, CartState> {
 
     protected Cart(CartState state) {
         super(CartId.random(), state instanceof CartSample ? (CartSample) state : CartSample.from(state));
     }
 
-    public static Cart create(CartSpecification specification, EventPublisher eventPublisher) {
+    public static Cart create(CartSpecification specification, Consumer<EventPayload> eventPublisher) {
         Cart cart = new Cart(CartSample.from(validateBean(specification)));
-        eventPublisher.publish(CartCreatedEventPayload.of(cart.getId(), specification));
+        eventPublisher.accept(CartCreatedEventPayload.of(cart.getId(), specification));
         return cart;
     }
 
@@ -49,51 +48,51 @@ public class Cart extends BaseEntity<Cart, CartId, CartSample> {
     }
 
     @Override
-    protected CartSample cloneState() {
+    protected CartState cloneState() {
         return CartSample.from(state);
     }
 
     public Amount getTotal() {
         return state.getItems().stream()
                 .map(item -> item.getArticle().getTariff().apply(item.getQuantity()))
-                .reduce(Amount::plus)
+                .reduce(Amount::iplus)
                 .orElse(Amount.ZERO);
     }
 
     @Override
-    public void validate(CartSample state) {
+    public void validate(CartState state) {
         validateBean(state);
     }
 
-    public void addItem(CartItem cartItem, EventPublisher eventPublisher) {
-        condition(() -> state.getOrderId() == null, String.format("Cart {} has been ordered, no more add possible", getId()));
+    public void addItem(CartItem cartItem, Consumer<EventPayload> eventPublisher) {
+        condition(() -> state.getOrderId() == null, String.format("Cart %s has been ordered, no more add possible", getId()));
         validateBean(cartItem);
-        eventPublisher.publish(ItemAddedToCartEventPayload.of(getId(), cartItem));
+        eventPublisher.accept(ItemAddedToCartEventPayload.of(getId(), cartItem));
     }
 
-    public CartItem removeItem(CartItemId itemId, EventPublisher eventPublisher) {
-        condition(() -> state.getOrderId() == null, String.format("Cart {} has been ordered, no more add possible", getId()));
+    public CartItem removeItem(CartItemId itemId, Consumer<EventPayload> eventPublisher) {
+        condition(() -> state.getOrderId() == null, String.format("Cart %s has been ordered, no more add possible", getId()));
         return state.getItem(itemId).map(cartItem -> {
-            eventPublisher.publish(ItemRemovedFromCartEventPayload.of(getId(), itemId));
+            eventPublisher.accept(ItemRemovedFromCartEventPayload.of(getId(), itemId));
             return cartItem;
         }).orElseThrow(itemNotFound(CartItem.class, itemId, Cart.class, getId()));
     }
 
-    public void order(EventPublisher eventPublisher) {
-        condition(() -> state.getOrderId() == null, String.format("Cart {} is already ordered", getId()));
+    public void order(Consumer<EventPayload> eventPublisher) {
+        condition(() -> state.getOrderId() == null, String.format("Cart %s is already ordered", getId()));
         state.setOrderId(OrderId.random());
-        eventPublisher.publish(CartOrderedEventPayload.of(getId(),
+        eventPublisher.accept(CartOrderedEventPayload.of(getId(),
                 state.getType(),
                 state.getFolderId(),
                 state.getOrderId(),
                 getTotal()));
     }
 
-    public void close(InvoiceId invoiceId, EventPublisher eventPublisher) {
-        condition(() -> state.getOrderId() != null, String.format("Cart {} has not been ordered, hence not closeable", getId()));
-        condition(() -> state.getInvoiceId() == null, String.format("Cart {} is already closed", getId()));
+    public void close(InvoiceId invoiceId, Consumer<EventPayload> eventPublisher) {
+        condition(() -> state.getOrderId() != null, String.format("Cart %s has not been ordered, hence not closeable", getId()));
+        condition(() -> state.getInvoiceId() == null, String.format("Cart %s is already closed", getId()));
         state.setInvoiceId(invoiceId);
-        eventPublisher.publish(CartInvoicedEventPayload.of(getId(), state.getInvoiceId()));
+        eventPublisher.accept(CartInvoicedEventPayload.of(getId(), state.getInvoiceId()));
     }
 
     public Holder<Cart> save(CartRepository repository) {

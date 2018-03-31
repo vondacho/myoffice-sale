@@ -49,9 +49,11 @@ public class JpaCartState extends JpaBaseEntity implements CartState {
             @Column(name="id"),
             @Column(name="articleId"),
             @Column(name="title"),
-            @Column(name="tariff"),
-            @Column(name="unit"),
+            @Column(name = "tariff_price"),
+            @Column(name = "tariff_target_quantity"),
+            @Column(name = "tariff_target_unit"),
             @Column(name="quantity"),
+            @Column(name = "quantity_unit"),
             @Column(name="timestamp")
     })
     @ElementCollection

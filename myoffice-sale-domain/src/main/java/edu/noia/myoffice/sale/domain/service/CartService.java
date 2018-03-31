@@ -32,40 +32,40 @@ public class CartService {
     EventPublisher eventPublisher;
 
     public void create(CreateCartCommand command) {
-        Cart.create(command.getSpecification(), eventPublisher).save(cartRepository);
+        Cart.create(command.getSpecification(), eventPublisher::publish).save(cartRepository);
     }
 
     public void addItem(AddItemToCartCommand command) {
-        applyOnCart(command.getCartId(), cart -> {
+        applyOn(command.getCartId(), cart -> {
             if (cart.getType() == CartType.LOG) {
                 eventPublisher.publish(ItemCreatedEventPayload.of(cart.getId(), command.getCartItem()));
             } else {
-                cart.addItem(command.getCartItem(), eventPublisher);
+                cart.addItem(command.getCartItem(), eventPublisher::publish);
             }
         });
     }
 
     public void deposeItem(DeposeItemIntoCartCommand command) {
-        applyOnCart(command.getCartId(), cart -> cart.addItem(command.getCartItem(), eventPublisher));
+        applyOn(command.getCartId(), cart -> cart.addItem(command.getCartItem(), eventPublisher::publish));
     }
 
     public void removeItem(RemoveItemFromCartCommand command) {
-        applyOnCart(command.getCartId(), cart -> cart.removeItem(command.getCartItemId(), eventPublisher));
+        applyOn(command.getCartId(), cart -> cart.removeItem(command.getCartItemId(), eventPublisher::publish));
     }
 
     public void order(OrderCartCommand command) {
-        applyOnCart(command.getCartId(), cart -> cart.order(eventPublisher));
+        applyOn(command.getCartId(), cart -> cart.order(eventPublisher::publish));
     }
 
     public void close(CloseCartCommand command) {
-        applyOnCart(command.getCartId(), cart -> cart.close(command.getInvoiceId(), eventPublisher));
+        applyOn(command.getCartId(), cart -> cart.close(command.getInvoiceId(), eventPublisher::publish));
     }
 
-    public void applyOnCart(CartId cartId, Consumer<Cart> action) {
-        findCart(cartId).execute(action::accept);
+    private void applyOn(CartId cartId, Consumer<Cart> action) {
+        find(cartId).execute(action);
     }
 
-    public Holder<Cart> findCart(CartId cartId) {
+    private Holder<Cart> find(CartId cartId) {
         return cartRepository.findOne(cartId).orElseThrow(notFound(Cart.class, cartId));
     }
 }
