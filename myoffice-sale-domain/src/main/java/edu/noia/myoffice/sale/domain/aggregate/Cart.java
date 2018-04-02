@@ -53,10 +53,13 @@ public class Cart extends BaseEntity<Cart, CartId, CartState> {
     }
 
     public Amount getTotal() {
-        return state.getItems().stream()
-                .map(item -> item.getArticle().getTariff().apply(item.getQuantity()))
-                .reduce(Amount::iplus)
-                .orElse(Amount.ZERO);
+        if (state.getItems().isEmpty()) {
+            return Amount.ZERO;
+        } else {
+            Amount total = Amount.from(Amount.ZERO);
+            state.getItems().forEach(item -> total.plus(item.getPrice()));
+            return total;
+        }
     }
 
     @Override
@@ -99,28 +102,28 @@ public class Cart extends BaseEntity<Cart, CartId, CartState> {
         return repository.save(id, state);
     }
 
-    protected void create(CartCreatedEventPayload event, Instant timestamp) {
+    protected void created(CartCreatedEventPayload event, Instant timestamp) {
         setId(event.getCartId());
         setState(CartSample.from(event.getCartSpecification()));
         andEvent(BaseEvent.of(event, timestamp));
     }
 
-    protected void addItem(ItemAddedToCartEventPayload event, Instant timestamp) {
+    protected void itemAdded(ItemAddedToCartEventPayload event, Instant timestamp) {
         state.add(event.getCartItem());
         andEvent(event, timestamp);
     }
 
-    protected void removeItem(ItemRemovedFromCartEventPayload event, Instant timestamp) {
+    protected void itemRemoved(ItemRemovedFromCartEventPayload event, Instant timestamp) {
         state.remove(event.getCartItemId());
         andEvent(event, timestamp);
     }
 
-    protected void order(CartOrderedEventPayload event, Instant timestamp) {
+    protected void ordered(CartOrderedEventPayload event, Instant timestamp) {
         state.setOrderId(event.getOrderId());
         andEvent(event, timestamp);
     }
 
-    protected void invoice(CartInvoicedEventPayload event, Instant timestamp) {
+    protected void invoiced(CartInvoicedEventPayload event, Instant timestamp) {
         state.setInvoiceId(event.getInvoiceId());
         andEvent(event, timestamp);
     }

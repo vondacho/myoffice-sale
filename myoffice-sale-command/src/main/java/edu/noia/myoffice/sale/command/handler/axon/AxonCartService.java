@@ -12,38 +12,44 @@ import edu.noia.myoffice.sale.domain.service.CartService;
 import edu.noia.myoffice.sale.domain.vo.CartSample;
 import org.axonframework.commandhandling.CommandHandler;
 
-public class AxonCartServiceProxy extends CartService {
+public class AxonCartService extends CartService {
 
-    public AxonCartServiceProxy(CartRepository cartRepository, EventPublisher eventPublisher) {
+    public AxonCartService(CartRepository cartRepository, EventPublisher eventPublisher) {
         super(cartRepository, eventPublisher);
     }
 
     @CommandHandler
+    @Override
     public void create(CreateCartCommand command) {
         cartRepository.save(null, CartSample.from(command.getSpecification()));
     }
 
     @CommandHandler
+    @Override
     public void addItem(AddItemToCartCommand command) {
         super.addItem(command);
     }
 
     @CommandHandler
+    @Override
     public void removeItem(RemoveItemFromCartCommand command) {
         super.removeItem(command);
     }
 
     @CommandHandler
+    @Override
     public void deposeItem(DeposeItemIntoCartCommand command) {
         super.deposeItem(command);
     }
 
     @CommandHandler
+    @Override
     public void order(OrderCartCommand command) {
         super.order(command);
     }
 
     @CommandHandler
+    @Override
     public void close(CloseCartCommand command) {
         super.close(command);
     }

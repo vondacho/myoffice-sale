@@ -64,29 +64,34 @@ public class AxonCart extends Cart {
     }
 
     @EventSourcingHandler
+    @Override
     public void created(CartCreatedEventPayload event, @Timestamp Instant timestamp) {
         aggregateId = event.getCartId();
-        super.create(event, timestamp);
+        super.created(event, timestamp);
     }
 
     @EventSourcingHandler
+    @Override
     public void itemAdded(ItemAddedToCartEventPayload event, @Timestamp Instant timestamp) {
-        super.addItem(event, timestamp);
+        super.itemAdded(event, timestamp);
     }
 
     @EventSourcingHandler
+    @Override
     public void itemRemoved(ItemRemovedFromCartEventPayload event, @Timestamp Instant timestamp) {
-        super.removeItem(event, timestamp);
+        super.itemRemoved(event, timestamp);
     }
 
     @EventSourcingHandler
+    @Override
     public void ordered(CartOrderedEventPayload event, @Timestamp Instant timestamp) {
-        super.order(event, timestamp);
+        super.ordered(event, timestamp);
     }
 
     @EventSourcingHandler
+    @Override
     public void invoiced(CartInvoicedEventPayload event, @Timestamp Instant timestamp) {
-        super.invoice(event, timestamp);
+        super.invoiced(event, timestamp);
     }
 
     @Override

@@ -1,5 +1,6 @@
-package edu.noia.myoffice.sale.query.data.jpa.hibernate.converter;
+package edu.noia.myoffice.sale.query.data.jpa.hibernate.type;
 
+import edu.noia.myoffice.common.data.jpa.hibernate.type.AbstractUserType;
 import edu.noia.myoffice.common.domain.vo.Amount;
 import edu.noia.myoffice.common.domain.vo.Quantity;
 import edu.noia.myoffice.common.domain.vo.Tariff;
@@ -12,9 +13,7 @@ import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.type.DateType;
 import org.hibernate.type.LongType;
 import org.hibernate.type.StringType;
-import org.hibernate.usertype.UserType;
 
-import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,7 +21,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.UUID;
 
-public class CartItemConverter implements UserType {
+public class CartItemType extends AbstractUserType {
 
     @Override
     public int[] sqlTypes() {
@@ -42,16 +41,6 @@ public class CartItemConverter implements UserType {
     @Override
     public Class returnedClass() {
         return CartItem.class;
-    }
-
-    @Override
-    public boolean equals(Object x, Object y) {
-        return x != null && x.equals(y);
-    }
-
-    @Override
-    public int hashCode(Object x) {
-        return x.hashCode();
     }
 
     @Override
@@ -103,30 +92,5 @@ public class CartItemConverter implements UserType {
         st.setString(index++, cartItem.getQuantity().getUnit().toString());
         // item timestamp
         st.setTimestamp(index, cartItem.getTimestamp() != null ? Timestamp.valueOf(cartItem.getTimestamp()) : Timestamp.from(Instant.now()));
-    }
-
-    @Override
-    public Object deepCopy(Object value) {
-        return value;
-    }
-
-    @Override
-    public boolean isMutable() {
-        return false;
-    }
-
-    @Override
-    public Serializable disassemble(Object value) {
-        return (Serializable) value;
-    }
-
-    @Override
-    public Object assemble(Serializable cached, Object owner) {
-        return cached;
-    }
-
-    @Override
-    public Object replace(Object original, Object target, Object owner) {
-        return original;
     }
 }

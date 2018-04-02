@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.Type;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Table(name = "cart")
+@Audited
 @Entity
 @EqualsAndHashCode(of = "id", callSuper = false)
 @Accessors(chain=true)
@@ -44,7 +46,7 @@ public class JpaCartState extends JpaBaseEntity implements CartState {
                 .setItems(state.getItems());
     }
 
-    @Type(type = "edu.noia.myoffice.sale.query.data.jpa.hibernate.converter.CartItemConverter")
+    @Type(type = "edu.noia.myoffice.sale.query.data.jpa.hibernate.type.CartItemType")
     @Columns(columns = {
             @Column(name="id"),
             @Column(name="articleId"),

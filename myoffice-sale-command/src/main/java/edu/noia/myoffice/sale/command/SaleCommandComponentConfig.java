@@ -8,8 +8,8 @@ import edu.noia.myoffice.common.domain.vo.Rate;
 import edu.noia.myoffice.common.mixin.QuantityMixin;
 import edu.noia.myoffice.common.mixin.RateMixin;
 import edu.noia.myoffice.common.serializer.CommonSerializers;
-import edu.noia.myoffice.sale.command.handler.axon.AxonCartServiceProxy;
-import edu.noia.myoffice.sale.command.handler.axon.AxonInventoryCommandHandler;
+import edu.noia.myoffice.sale.command.handler.axon.AxonCartService;
+import edu.noia.myoffice.sale.command.handler.axon.AxonInventoryService;
 import edu.noia.myoffice.sale.common.mixin.CartItemMixin;
 import edu.noia.myoffice.sale.common.serializer.SaleSerializers;
 import edu.noia.myoffice.sale.domain.repository.CartRepository;
@@ -26,13 +26,13 @@ import org.springframework.context.annotation.Primary;
 public class SaleCommandComponentConfig {
 
     @Bean
-    public AxonCartServiceProxy cartCommandHandler(CartRepository cartRepository, EventPublisher eventPublisher) {
-        return new AxonCartServiceProxy(cartRepository, eventPublisher);
+    public AxonCartService cartCommandHandler(CartRepository cartRepository, EventPublisher eventPublisher) {
+        return new AxonCartService(cartRepository, eventPublisher);
     }
 
     @Bean
-    public AxonInventoryCommandHandler inventoryCommandHandler(EventPublisher eventPublisher) {
-        return new AxonInventoryCommandHandler(eventPublisher);
+    public AxonInventoryService inventoryCommandHandler(EventPublisher eventPublisher) {
+        return new AxonInventoryService(eventPublisher);
     }
 
     @Primary

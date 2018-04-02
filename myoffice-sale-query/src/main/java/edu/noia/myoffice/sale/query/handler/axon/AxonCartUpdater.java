@@ -9,9 +9,9 @@ import edu.noia.myoffice.sale.query.handler.CartUpdater;
 import edu.noia.myoffice.sale.query.repository.CartStateRepository;
 import org.axonframework.eventhandling.EventHandler;
 
-public class AxonCartUpdaterProxy extends CartUpdater {
+public class AxonCartUpdater extends CartUpdater {
 
-    public AxonCartUpdaterProxy(CartStateRepository repository) {
+    public AxonCartUpdater(CartStateRepository repository) {
         super(repository);
     }
 

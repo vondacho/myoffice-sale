@@ -11,7 +11,7 @@ import org.axonframework.commandhandling.CommandHandler;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AxonInventoryCommandHandler {
+public class AxonInventoryService {
 
     @NonNull
     EventPublisher eventPublisher;
