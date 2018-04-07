@@ -22,11 +22,11 @@ public class SpringfoxConfiguration {
                 .groupName("myOffice API")
                 .apiInfo(apiInfo())
                 .select()
-                .paths(salePaths())
+                .paths(endpointPaths())
                 .build();
     }
 
-    private Predicate<String> salePaths() {
+    private Predicate<String> endpointPaths() {
         return regex("/api/sale.*");
     }
 

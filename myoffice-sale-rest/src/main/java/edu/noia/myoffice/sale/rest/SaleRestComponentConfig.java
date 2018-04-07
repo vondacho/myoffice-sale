@@ -5,6 +5,7 @@ import edu.noia.myoffice.common.domain.vo.Quantity;
 import edu.noia.myoffice.common.domain.vo.Rate;
 import edu.noia.myoffice.common.mixin.QuantityMixin;
 import edu.noia.myoffice.common.mixin.RateMixin;
+import edu.noia.myoffice.common.rest.exception.EndpointExceptionHandler;
 import edu.noia.myoffice.common.serializer.CommonSerializers;
 import edu.noia.myoffice.sale.common.mixin.CartItemMixin;
 import edu.noia.myoffice.sale.common.serializer.SaleSerializers;
@@ -15,7 +16,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
-@ComponentScan
+@ComponentScan(basePackageClasses = {
+        SaleRestComponentConfig.class,
+        EndpointExceptionHandler.class
+})
 @Configuration
 public class SaleRestComponentConfig {
 

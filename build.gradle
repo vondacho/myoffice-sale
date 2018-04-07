@@ -16,7 +16,7 @@ buildscript {
 allprojects {
     apply plugin: 'java'
     group 'edu.noia.myoffice'
-    version = '0.0.14'
+    version = '0.0.15'
     repositories {
         jcenter()
         mavenLocal()

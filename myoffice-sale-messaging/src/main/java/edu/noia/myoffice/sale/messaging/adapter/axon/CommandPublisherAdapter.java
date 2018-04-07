@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.axonframework.commandhandling.CommandCallback;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.axonframework.commandhandling.GenericCommandMessage.asCommandMessage;
 
 @RequiredArgsConstructor
@@ -19,6 +22,12 @@ public class CommandPublisherAdapter implements CommandPublisher {
 
     @Override
     public void accept(Command command) {
-        commandGateway.send(asCommandMessage(command), saleCommandCallback);
+        Map<String, String> metadata = new HashMap<>();
+        commandGateway.send(asCommandMessage(command).withMetaData(metadata), saleCommandCallback);
+    }
+
+    private Map<String, String> makeMetadata() {
+        Map<String, String> metadata = new HashMap<>();
+        return metadata;
     }
 }

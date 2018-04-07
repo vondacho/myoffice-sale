@@ -16,6 +16,7 @@ dependencies {
     compile 'mysql:mysql-connector-java'
     compile "de.codecentric:spring-boot-admin-starter-client:${springBootAdminVersion}"
     compile "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client"
+    compile "org.axonframework:axon-distributed-commandbus-springcloud:${axonVersion}"
 }
 
 bootJar.enabled = true
