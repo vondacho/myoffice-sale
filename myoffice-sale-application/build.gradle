@@ -1,20 +1,21 @@
 dependencies {
-    compile("edu.noia.myoffice:myoffice-sale-common:${version}")
-    compile("edu.noia.myoffice:myoffice-sale-command:${version}")
-    compile("edu.noia.myoffice:myoffice-sale-command-data:${version}")
-    compile("edu.noia.myoffice:myoffice-sale-query:${version}")
-    compile("edu.noia.myoffice:myoffice-sale-query-data:${version}")
-    compile("edu.noia.myoffice:myoffice-sale-messaging:${version}")
-    compile("edu.noia.myoffice:myoffice-sale-rest:${version}")
+    compile "edu.noia.myoffice:myoffice-sale-common:${version}"
+    compile "edu.noia.myoffice:myoffice-sale-command:${version}"
+    compile "edu.noia.myoffice:myoffice-sale-command-data:${version}"
+    compile "edu.noia.myoffice:myoffice-sale-query:${version}"
+    compile "edu.noia.myoffice:myoffice-sale-query-data:${version}"
+    compile "edu.noia.myoffice:myoffice-sale-messaging:${version}"
+    compile "edu.noia.myoffice:myoffice-sale-rest:${version}"
     compile 'org.springframework.boot:spring-boot-starter-actuator'
-    compile("org.springframework.data:spring-data-rest-hal-browser:${springHalBrowserVersion}")
-    compile("io.springfox:springfox-swagger2:${springfoxVersion}")
-    compile("io.springfox:springfox-data-rest:${springfoxVersion}")
-    compile("io.springfox:springfox-swagger-ui:${springfoxVersion}")
-    compile("org.hsqldb:hsqldb:${hsqlDatabaseVersion}")
-    compile("org.flywaydb:flyway-core:${flywayVersion}")
+    compile "org.springframework.data:spring-data-rest-hal-browser:${springHalBrowserVersion}"
+    compile "io.springfox:springfox-swagger2:${springfoxVersion}"
+    compile "io.springfox:springfox-data-rest:${springfoxVersion}"
+    compile "io.springfox:springfox-swagger-ui:${springfoxVersion}"
+    compile "org.hsqldb:hsqldb:${hsqlDatabaseVersion}"
+    compile "org.flywaydb:flyway-core:${flywayVersion}"
     compile 'mysql:mysql-connector-java'
-    compile("de.codecentric:spring-boot-admin-starter-client:${springBootAdminVersion}")
+    compile "de.codecentric:spring-boot-admin-starter-client:${springBootAdminVersion}"
+    compile "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client"
 }
 
 bootJar.enabled = true
