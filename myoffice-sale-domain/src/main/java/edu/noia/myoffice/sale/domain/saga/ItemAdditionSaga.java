@@ -1,4 +1,4 @@
-package edu.noia.myoffice.sale.domain.service;
+package edu.noia.myoffice.sale.domain.saga;
 
 import edu.noia.myoffice.common.domain.command.CommandPublisher;
 import edu.noia.myoffice.sale.domain.command.article.ReserveArticleCommand;
@@ -24,9 +24,9 @@ public abstract class ItemAdditionSaga {
         setCartItem(event.getCartItem());
         commandPublisher.accept(
                 ReserveArticleCommand.of(
-                    event.getCartId(),
-                    event.getCartItem().getArticle().getArticleId(),
-                    event.getCartItem().getQuantity()));
+                        event.getCartId(),
+                        event.getCartItem().getArticle().getArticleId(),
+                        event.getCartItem().getQuantity()));
     }
 
     /**
@@ -57,8 +57,11 @@ public abstract class ItemAdditionSaga {
     public void on(SystemFailedToReserveArticleEventPayload event) {
     }
 
-    protected abstract void setCartId(CartId cartId);
     protected abstract CartId getCartId();
-    protected abstract void setCartItem(CartItem cartItem);
+
+    protected abstract void setCartId(CartId cartId);
+
     protected abstract CartItem getCartItem();
+
+    protected abstract void setCartItem(CartItem cartItem);
 }

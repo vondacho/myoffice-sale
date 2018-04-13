@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class SaleCommandDataComponentConfig {
+public class SaleCommandDataComponentConfiguration {
 
     @Autowired
     private AxonConfiguration axonConfiguration;

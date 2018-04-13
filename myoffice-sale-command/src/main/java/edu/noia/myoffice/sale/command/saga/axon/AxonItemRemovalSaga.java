@@ -1,8 +1,8 @@
-package edu.noia.myoffice.sale.command.service.axon;
+package edu.noia.myoffice.sale.command.saga.axon;
 
 import edu.noia.myoffice.sale.domain.event.article.SystemCancelledArticleReservationEventPayload;
 import edu.noia.myoffice.sale.domain.event.item.ItemRemovedFromCartEventPayload;
-import edu.noia.myoffice.sale.domain.service.ItemRemovalSaga;
+import edu.noia.myoffice.sale.domain.saga.ItemRemovalSaga;
 import edu.noia.myoffice.sale.domain.vo.CartId;
 import edu.noia.myoffice.sale.domain.vo.CartItemId;
 import lombok.AccessLevel;

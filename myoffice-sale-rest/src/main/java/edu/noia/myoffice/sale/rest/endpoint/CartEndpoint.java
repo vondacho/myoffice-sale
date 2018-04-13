@@ -6,7 +6,6 @@ import edu.noia.myoffice.sale.domain.command.cart.CreateCartCommand;
 import edu.noia.myoffice.sale.domain.command.cart.OrderCartCommand;
 import edu.noia.myoffice.sale.domain.command.item.AddItemToCartCommand;
 import edu.noia.myoffice.sale.domain.command.item.RemoveItemFromCartCommand;
-import edu.noia.myoffice.sale.domain.service.CartService;
 import edu.noia.myoffice.sale.domain.vo.CartId;
 import edu.noia.myoffice.sale.domain.vo.CartItem;
 import edu.noia.myoffice.sale.domain.vo.CartItemId;
@@ -32,8 +31,6 @@ public class CartEndpoint {
 
     @NonNull
     CommandPublisher commandPublisher;
-    @NonNull
-    CartService cartService;
 
     @PostMapping
     public ResponseEntity create(@RequestBody CartSpecification cartSpecification) {

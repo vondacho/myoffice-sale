@@ -1,4 +1,4 @@
-package edu.noia.myoffice.sale.domain.service;
+package edu.noia.myoffice.sale.domain.saga;
 
 import edu.noia.myoffice.common.domain.command.CommandPublisher;
 import edu.noia.myoffice.common.domain.vo.Amount;

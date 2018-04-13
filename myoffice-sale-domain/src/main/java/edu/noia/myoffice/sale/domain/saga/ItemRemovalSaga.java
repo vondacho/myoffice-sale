@@ -1,4 +1,4 @@
-package edu.noia.myoffice.sale.domain.service;
+package edu.noia.myoffice.sale.domain.saga;
 
 import edu.noia.myoffice.sale.domain.event.article.SystemCancelledArticleReservationEventPayload;
 import edu.noia.myoffice.sale.domain.event.item.ItemRemovedFromCartEventPayload;
@@ -8,6 +8,7 @@ public class ItemRemovalSaga {
 
     /**
      * Start of saga
+     *
      * @param event
      */
     public void on(ItemRemovedFromCartEventPayload event) {
@@ -16,6 +17,7 @@ public class ItemRemovalSaga {
 
     /**
      * End of saga
+     *
      * @param event
      */
     public void on(SystemCancelledArticleReservationEventPayload event) {

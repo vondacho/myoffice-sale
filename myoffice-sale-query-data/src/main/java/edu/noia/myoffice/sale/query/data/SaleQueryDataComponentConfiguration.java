@@ -26,7 +26,7 @@ import java.util.UUID;
 @EnableJpaRepositories(repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class)
 @EntityScan
 @Configuration
-public class SaleQueryDataComponentConfig {
+public class SaleQueryDataComponentConfiguration {
 
     @Bean
     public CartStateRepository cartStateRepository(JpaCartStateRepository jpaCartStateRepository) {

@@ -8,11 +8,15 @@ import edu.noia.myoffice.common.domain.vo.Rate;
 import edu.noia.myoffice.common.mixin.QuantityMixin;
 import edu.noia.myoffice.common.mixin.RateMixin;
 import edu.noia.myoffice.common.serializer.CommonSerializers;
-import edu.noia.myoffice.sale.command.handler.axon.AxonCartService;
-import edu.noia.myoffice.sale.command.handler.axon.AxonInventoryService;
+import edu.noia.myoffice.sale.command.command.axon.AxonInventoryCommandHandler;
+import edu.noia.myoffice.sale.command.command.axon.AxonSaleCommandHandler;
+import edu.noia.myoffice.sale.command.service.axon.AxonCartService;
 import edu.noia.myoffice.sale.common.mixin.CartItemMixin;
 import edu.noia.myoffice.sale.common.serializer.SaleSerializers;
 import edu.noia.myoffice.sale.domain.repository.CartRepository;
+import edu.noia.myoffice.sale.domain.service.CartService;
+import edu.noia.myoffice.sale.domain.service.DefaultInventoryService;
+import edu.noia.myoffice.sale.domain.service.InventoryService;
 import edu.noia.myoffice.sale.domain.vo.CartItem;
 import org.axonframework.serialization.Serializer;
 import org.axonframework.serialization.json.JacksonSerializer;
@@ -23,16 +27,16 @@ import org.springframework.context.annotation.Primary;
 
 @ComponentScan
 @Configuration
-public class SaleCommandComponentConfig {
+public class SaleCommandComponentConfiguration {
 
     @Bean
-    public AxonCartService cartCommandHandler(CartRepository cartRepository, EventPublisher eventPublisher) {
-        return new AxonCartService(cartRepository, eventPublisher);
+    public CartService cartService(CartRepository cartRepository, EventPublisher eventPublisher) {
+        return new AxonSaleCommandHandler(new AxonCartService(cartRepository, eventPublisher));
     }
 
     @Bean
-    public AxonInventoryService inventoryCommandHandler(EventPublisher eventPublisher) {
-        return new AxonInventoryService(eventPublisher);
+    public InventoryService inventoryCommandHandler(EventPublisher eventPublisher) {
+        return new AxonInventoryCommandHandler(new DefaultInventoryService(eventPublisher));
     }
 
     @Primary

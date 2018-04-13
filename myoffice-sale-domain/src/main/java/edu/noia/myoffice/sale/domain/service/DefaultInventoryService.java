@@ -1,4 +1,4 @@
-package edu.noia.myoffice.sale.command.handler.axon;
+package edu.noia.myoffice.sale.domain.service;
 
 import edu.noia.myoffice.common.domain.event.EventPublisher;
 import edu.noia.myoffice.sale.domain.command.article.ReserveArticleCommand;
@@ -7,17 +7,16 @@ import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.axonframework.commandhandling.CommandHandler;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AxonInventoryService {
+public class DefaultInventoryService implements InventoryService {
 
     @NonNull
     EventPublisher eventPublisher;
 
-    @CommandHandler
-    public void on(ReserveArticleCommand command) {
+    @Override
+    public void reserve(ReserveArticleCommand command) {
         eventPublisher.publish(SystemReservedArticleEventPayload.of(
                 command.getCartId(), command.getArticleId(), command.getQuantity()));
     }

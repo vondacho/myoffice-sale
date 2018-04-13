@@ -1,11 +1,11 @@
-package edu.noia.myoffice.sale.command.service.axon;
+package edu.noia.myoffice.sale.command.saga.axon;
 
 import edu.noia.myoffice.common.domain.command.CommandPublisher;
 import edu.noia.myoffice.sale.domain.event.article.SystemFailedToReserveArticleEventPayload;
 import edu.noia.myoffice.sale.domain.event.article.SystemReservedArticleEventPayload;
 import edu.noia.myoffice.sale.domain.event.item.ItemAddedToCartEventPayload;
 import edu.noia.myoffice.sale.domain.event.item.ItemCreatedEventPayload;
-import edu.noia.myoffice.sale.domain.service.ItemAdditionSaga;
+import edu.noia.myoffice.sale.domain.saga.ItemAdditionSaga;
 import edu.noia.myoffice.sale.domain.vo.CartId;
 import edu.noia.myoffice.sale.domain.vo.CartItem;
 import lombok.AccessLevel;

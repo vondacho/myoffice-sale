@@ -38,9 +38,7 @@ public class AxonCart extends Cart {
     }
 
     public static AxonCart create(CartSpecification specification) {
-        AxonCart cart = new AxonCart(CartSample.from(validateBean(specification)));
-        AggregateLifecycle.apply(CartCreatedEventPayload.of(cart.getId(), specification));
-        return cart;
+        return (AxonCart) create(specification, AggregateLifecycle::apply, AxonCart::new);
     }
 
     @Override

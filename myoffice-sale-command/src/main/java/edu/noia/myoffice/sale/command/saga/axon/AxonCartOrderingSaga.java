@@ -1,4 +1,4 @@
-package edu.noia.myoffice.sale.command.service.axon;
+package edu.noia.myoffice.sale.command.saga.axon;
 
 import edu.noia.myoffice.common.domain.command.CommandPublisher;
 import edu.noia.myoffice.common.domain.vo.Amount;
@@ -8,7 +8,7 @@ import edu.noia.myoffice.sale.domain.event.article.SystemFailedToReserveArticleL
 import edu.noia.myoffice.sale.domain.event.cart.CartOrderedEventPayload;
 import edu.noia.myoffice.sale.domain.event.invoice.InvoiceCreatedEventPayload;
 import edu.noia.myoffice.sale.domain.event.order.OrderCancelledEvent;
-import edu.noia.myoffice.sale.domain.service.CartOrderingSaga;
+import edu.noia.myoffice.sale.domain.saga.CartOrderingSaga;
 import edu.noia.myoffice.sale.domain.vo.CartId;
 import edu.noia.myoffice.sale.domain.vo.FolderId;
 import edu.noia.myoffice.sale.domain.vo.InvoiceId;

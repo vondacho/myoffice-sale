@@ -1,56 +1,64 @@
-package edu.noia.myoffice.sale.command.handler.axon;
+package edu.noia.myoffice.sale.command.command.axon;
 
-import edu.noia.myoffice.common.domain.event.EventPublisher;
+import edu.noia.myoffice.sale.domain.command.cart.CartCommand;
 import edu.noia.myoffice.sale.domain.command.cart.CloseCartCommand;
 import edu.noia.myoffice.sale.domain.command.cart.CreateCartCommand;
 import edu.noia.myoffice.sale.domain.command.cart.OrderCartCommand;
 import edu.noia.myoffice.sale.domain.command.item.AddItemToCartCommand;
 import edu.noia.myoffice.sale.domain.command.item.DeposeItemIntoCartCommand;
 import edu.noia.myoffice.sale.domain.command.item.RemoveItemFromCartCommand;
-import edu.noia.myoffice.sale.domain.repository.CartRepository;
 import edu.noia.myoffice.sale.domain.service.CartService;
-import edu.noia.myoffice.sale.domain.vo.CartSample;
+import lombok.AccessLevel;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.axonframework.commandhandling.CommandHandler;
 
-public class AxonCartService extends CartService {
+/**
+ * This class is a {@link CartCommand} listener which proxies a {@link CartService} instance
+ * Command listener aspect provided by Axon
+ * Proxy pattern applied
+ */
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class AxonSaleCommandHandler implements CartService {
 
-    public AxonCartService(CartRepository cartRepository, EventPublisher eventPublisher) {
-        super(cartRepository, eventPublisher);
-    }
+    @NonNull
+    CartService cartService;
 
     @CommandHandler
     @Override
     public void create(CreateCartCommand command) {
-        cartRepository.save(null, CartSample.from(command.getSpecification()));
+        cartService.create(command);
     }
 
     @CommandHandler
     @Override
     public void addItem(AddItemToCartCommand command) {
-        super.addItem(command);
+        cartService.addItem(command);
     }
 
     @CommandHandler
     @Override
     public void removeItem(RemoveItemFromCartCommand command) {
-        super.removeItem(command);
+        cartService.removeItem(command);
     }
 
     @CommandHandler
     @Override
     public void deposeItem(DeposeItemIntoCartCommand command) {
-        super.deposeItem(command);
+        cartService.deposeItem(command);
     }
 
     @CommandHandler
     @Override
     public void order(OrderCartCommand command) {
-        super.order(command);
+        cartService.order(command);
     }
 
     @CommandHandler
     @Override
     public void close(CloseCartCommand command) {
-        super.close(command);
+        cartService.close(command);
     }
 }

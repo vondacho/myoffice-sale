@@ -20,6 +20,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.time.Instant;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static edu.noia.myoffice.common.util.exception.ExceptionSuppliers.itemNotFound;
 import static edu.noia.myoffice.common.util.validation.Rule.condition;
@@ -33,13 +34,20 @@ public class Cart extends BaseEntity<Cart, CartId, CartState> {
         super(CartId.random(), state instanceof CartSample ? (CartSample) state : CartSample.from(state));
     }
 
-    public static Cart create(CartSpecification specification, Consumer<EventPayload> eventPublisher) {
-        Cart cart = new Cart(CartSample.from(validateBean(specification)));
+    protected static Cart create(CartSpecification specification,
+                                 Consumer<EventPayload> eventPublisher,
+                                 Function<CartState, Cart> factory) {
+        CartSample sample = CartSample.from(validateBean(specification));
+        Cart cart = factory.apply(sample);
         eventPublisher.accept(CartCreatedEventPayload.of(cart.getId(), specification));
         return cart;
     }
 
-    protected static <T> T validateBean(T state) {
+    public static Cart create(CartSpecification specification, Consumer<EventPayload> eventPublisher) {
+        return create(specification, eventPublisher, Cart::new);
+    }
+
+    private static <T> T validateBean(T state) {
         return BeanValidator.validate(state);
     }
 
