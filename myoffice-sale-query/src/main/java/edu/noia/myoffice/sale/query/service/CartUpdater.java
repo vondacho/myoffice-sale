@@ -1,5 +1,6 @@
-package edu.noia.myoffice.sale.query.handler;
+package edu.noia.myoffice.sale.query.service;
 
+import edu.noia.myoffice.sale.domain.event.CartEventHandler;
 import edu.noia.myoffice.sale.domain.event.cart.CartCreatedEventPayload;
 import edu.noia.myoffice.sale.domain.event.cart.CartInvoicedEventPayload;
 import edu.noia.myoffice.sale.domain.event.cart.CartOrderedEventPayload;
@@ -14,7 +15,7 @@ import lombok.experimental.FieldDefaults;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class DefaultCartUpdater implements CartUpdater {
+public class CartUpdater implements CartEventHandler {
 
     @NonNull
     CartStateRepository repository;

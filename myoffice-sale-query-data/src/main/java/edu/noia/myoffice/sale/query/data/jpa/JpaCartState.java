@@ -59,7 +59,7 @@ public class JpaCartState extends JpaBaseEntity implements CartState {
             @Column(name="timestamp")
     })
     @ElementCollection
-    @CollectionTable(name = "cart_items", joinColumns = @JoinColumn(name = "cart_pk"))
+    @CollectionTable(name = "t_cart_items", joinColumns = @JoinColumn(name = "fk_cart"))
     List<CartItem> items = new ArrayList<>();
 
     @Override

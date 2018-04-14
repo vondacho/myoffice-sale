@@ -18,7 +18,7 @@ public class LogServiceMethodCallAspect {
     @Autowired
     ObjectMapper objectMapper;
 
-    @Pointcut("execution(* edu.noia.myoffice.sale.domain.service.DefaultCartService.*(..))")
+    @Pointcut("execution(* edu.noia.myoffice.sale.domain.service.CartService.*(..))")
     public void serviceMethods() {
     }
 

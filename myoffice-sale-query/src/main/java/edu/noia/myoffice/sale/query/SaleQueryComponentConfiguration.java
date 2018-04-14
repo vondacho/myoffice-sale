@@ -1,9 +1,8 @@
 package edu.noia.myoffice.sale.query;
 
-import edu.noia.myoffice.sale.query.handler.CartUpdater;
-import edu.noia.myoffice.sale.query.handler.DefaultCartUpdater;
-import edu.noia.myoffice.sale.query.handler.axon.AxonCartUpdater;
+import edu.noia.myoffice.sale.query.event.axon.AxonCartEventHandler;
 import edu.noia.myoffice.sale.query.repository.CartStateRepository;
+import edu.noia.myoffice.sale.query.service.CartUpdater;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class SaleQueryComponentConfiguration {
 
     @Bean
-    public CartUpdater cartUpdater(CartStateRepository cartStateRepository) {
-        return new AxonCartUpdater(new DefaultCartUpdater(cartStateRepository));
+    public AxonCartEventHandler cartUpdater(CartStateRepository cartStateRepository) {
+        return new AxonCartEventHandler(new CartUpdater(cartStateRepository));
     }
 }

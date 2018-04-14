@@ -8,14 +8,14 @@ import edu.noia.myoffice.common.domain.vo.Rate;
 import edu.noia.myoffice.common.mixin.QuantityMixin;
 import edu.noia.myoffice.common.mixin.RateMixin;
 import edu.noia.myoffice.common.serializer.CommonSerializers;
+import edu.noia.myoffice.sale.command.command.axon.AxonCartCommandHandler;
 import edu.noia.myoffice.sale.command.command.axon.AxonInventoryCommandHandler;
-import edu.noia.myoffice.sale.command.command.axon.AxonSaleCommandHandler;
 import edu.noia.myoffice.sale.command.service.axon.AxonCartService;
 import edu.noia.myoffice.sale.common.mixin.CartItemMixin;
 import edu.noia.myoffice.sale.common.serializer.SaleSerializers;
+import edu.noia.myoffice.sale.domain.command.CartCommandHandler;
+import edu.noia.myoffice.sale.domain.command.InventoryCommandHandler;
 import edu.noia.myoffice.sale.domain.repository.CartRepository;
-import edu.noia.myoffice.sale.domain.service.CartService;
-import edu.noia.myoffice.sale.domain.service.DefaultInventoryService;
 import edu.noia.myoffice.sale.domain.service.InventoryService;
 import edu.noia.myoffice.sale.domain.vo.CartItem;
 import org.axonframework.serialization.Serializer;
@@ -30,13 +30,13 @@ import org.springframework.context.annotation.Primary;
 public class SaleCommandComponentConfiguration {
 
     @Bean
-    public CartService cartService(CartRepository cartRepository, EventPublisher eventPublisher) {
-        return new AxonSaleCommandHandler(new AxonCartService(cartRepository, eventPublisher));
+    public CartCommandHandler cartService(CartRepository cartRepository, EventPublisher eventPublisher) {
+        return new AxonCartCommandHandler(new AxonCartService(cartRepository, eventPublisher));
     }
 
     @Bean
-    public InventoryService inventoryCommandHandler(EventPublisher eventPublisher) {
-        return new AxonInventoryCommandHandler(new DefaultInventoryService(eventPublisher));
+    public InventoryCommandHandler inventoryCommandHandler(EventPublisher eventPublisher) {
+        return new AxonInventoryCommandHandler(new InventoryService(eventPublisher));
     }
 
     @Primary

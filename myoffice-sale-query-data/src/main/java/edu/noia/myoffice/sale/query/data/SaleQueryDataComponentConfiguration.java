@@ -1,5 +1,6 @@
 package edu.noia.myoffice.sale.query.data;
 
+import edu.noia.myoffice.common.data.jpa.hibernate.naming.PhysicalNamingStrategy;
 import edu.noia.myoffice.sale.domain.vo.CartId;
 import edu.noia.myoffice.sale.query.data.adapter.CartStateRepositoryAdapter;
 import edu.noia.myoffice.sale.query.data.hateoas.CartIdResourceProcessor;
@@ -24,7 +25,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 @EnableJpaRepositories(repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class)
-@EntityScan
+@EntityScan(
+        basePackageClasses = {
+                JpaCartState.class,
+                PhysicalNamingStrategy.class
+        }
+)
 @Configuration
 public class SaleQueryDataComponentConfiguration {
 
