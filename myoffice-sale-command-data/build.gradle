@@ -1,5 +1,6 @@
 dependencies {
-    compile("edu.noia.myoffice:myoffice-sale-command:${version}")
-    compile 'org.springframework.boot:spring-boot-starter'
-    compile("org.axonframework:axon-spring-boot-starter:${axonVersion}")
+    compile "edu.noia.myoffice:myoffice-sale-command:${version}"
+    compile "org.springframework.boot:spring-boot-starter"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    compile "org.axonframework:axon-spring-boot-starter:${axonVersion}"
 }
