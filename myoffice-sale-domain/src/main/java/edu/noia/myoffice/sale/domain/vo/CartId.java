@@ -6,7 +6,6 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.UUID;
 
-@ToString
 @EqualsAndHashCode(of = "id", callSuper = false, doNotUseGetters = true)
 @Getter
 @RequiredArgsConstructor(staticName = "of")
@@ -18,5 +17,9 @@ public final class CartId implements Identity {
 
     public static CartId random() {
         return new CartId(UUID.randomUUID());
+    }
+
+    public String toString() {
+        return id.toString();
     }
 }

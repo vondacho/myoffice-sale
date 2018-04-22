@@ -71,8 +71,8 @@ public class Cart extends BaseEntity<Cart, CartId, CartState> {
     }
 
     @Override
-    public void validate(CartState state) {
-        validateBean(state);
+    public CartState validate(CartState state) {
+        return validateBean(state);
     }
 
     public void addItem(CartItem cartItem, Consumer<EventPayload> eventPublisher) {
